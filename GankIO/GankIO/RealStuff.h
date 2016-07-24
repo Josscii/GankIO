@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "GKAppConstants.h"
+#import <Mantle/Mantle.h>
 
-@interface RealStuff : NSObject
+@interface RealStuff : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *desc;
-@property (nonatomic, assign) GKRealStuffKind *type;
+@property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *who;
 

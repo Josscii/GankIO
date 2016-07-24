@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Mantle.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-GankIO.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,17 +37,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A56510931FFDC9AEE0A249A739F50D5</key>
+		<key>814D7F0C846B4DCB10FE73B71013FF5D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF4C8AD600B1DA314CFCAD8FF5BC83B1</key>
+		<key>891382FB61C0B7A2217A6C93E02A6F31</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FAD40B0B27849C3834BF892107F58471</key>
+		<key>A6B639DBAA0E16F36F4BCC1D3D5FBA96</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE2DAEE1FB6EDF0926E665630D6FF86A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

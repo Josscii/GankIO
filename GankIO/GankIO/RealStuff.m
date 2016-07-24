@@ -10,4 +10,13 @@
 
 @implementation RealStuff
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"desc": @"desc",
+             @"type": @"type",
+             @"url": @"url",
+             @"who": @"who"
+             };
+}
+
 @end

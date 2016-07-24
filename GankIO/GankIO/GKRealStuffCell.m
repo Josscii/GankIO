@@ -15,12 +15,10 @@
 
 @implementation GKRealStuffCell
 
-- (void)configreCellWithJSON:(NSDictionary *)dic {
-    NSString *desc = dic[@"desc"];
-    NSString *type = dic[@"type"];
-    UIColor *color = [UIColor colorWithRealStuffType:type];
+- (void)configreCellWithRealStuff:(RealStuff *)rs {
+    UIColor *color = [UIColor colorWithRealStuffType:rs.type];
     
-    self.realStuffTitleLabel.text = desc;
+    self.realStuffTitleLabel.text = rs.desc;
     self.kindIndicatorView.backgroundColor = color;
 }
 

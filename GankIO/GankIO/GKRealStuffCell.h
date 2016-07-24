@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RealStuff.h"
 
 @interface GKRealStuffCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *realStuffTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *kindIndicatorView;
 
-- (void)configreCellWithJSON:(NSDictionary *)dic;
+- (void)configreCellWithRealStuff:(RealStuff *)rs;
 
 @end

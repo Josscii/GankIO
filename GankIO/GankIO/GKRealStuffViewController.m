@@ -9,6 +9,8 @@
 #import "GKRealStuffViewController.h"
 #import "GKRealStuffCell.h"
 #import "GKHttpClient.h"
+#import "RACSignal+MTL.h"
+#import "RealStuff.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
@@ -26,10 +28,8 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     self.realStuffs = @[];
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow: -48 * 60 * 60];
-    NSLog(@"%@", date);
     
-    [[[[GKHttpClient sharedClient] getGankDataFromDay:date]
-     map:^id(id value) {
+    [[[[[GKHttpClient sharedClient] getGankDataFromDay:date] map:^id(id value) {
          NSMutableArray *realStuffs = [NSMutableArray array];
          NSDictionary *json = value;
          NSArray *categories = json[@"category"];
@@ -39,10 +39,10 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
              [realStuffs addObjectsFromArray:rs];
          }
          return realStuffs;
-     }] subscribeNext:^(id x) {
-         self.realStuffs = x;
-         [self.tableView reloadData];
-     }];
+    }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] subscribeNext:^(id x) {
+        self.realStuffs = x;
+        [self.tableView reloadData];
+    }];
     
     [self configureLayout];
 }
@@ -53,13 +53,13 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.realStuffs count];
+    return self.realStuffs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GKRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
     
-    [cell configreCellWithJSON:self.realStuffs[indexPath.row]];
+    [cell configreCellWithRealStuff:self.realStuffs[indexPath.row]];
     
     return cell;
 }

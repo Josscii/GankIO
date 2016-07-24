@@ -8,10 +8,11 @@
 
 #import "GKHttpClient.h"
 #import "GKNetworkConstants.h"
+#import "AFHTTPSessionManager+RAC.h"
 
 @interface GKHttpClient ()
 
-@property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 @end
 
@@ -30,7 +31,7 @@
     self = [super init];
     if (self) {
         NSURL *baseURL = [NSURL URLWithString:GKBaseApiURL];
-        _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
+        _manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     }
     return self;
 }
@@ -40,18 +41,7 @@
     formatter.dateFormat = @"yyyy/MM/dd";
     NSString *urlString = [@"day/" stringByAppendingString:[formatter stringFromDate:date]];
     
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        NSURLSessionDataTask *task = [self.sessionManager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [subscriber sendNext:responseObject];
-            [subscriber sendCompleted];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [subscriber sendError:error];
-        }];
-        
-        return [RACDisposable disposableWithBlock:^{
-            [task cancel];
-        }];
-    }];
+    return [self.manager rac_GET:urlString];
 }
 
 @end
