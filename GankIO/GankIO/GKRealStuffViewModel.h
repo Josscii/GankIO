@@ -7,9 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface GKRealStuffViewModel : NSObject
 
-// @property (nonatomic, strong)
+@property (nonatomic, strong) NSDate *date;
+
+@property (nonatomic, copy) NSArray *realStuffs;
+@property (nonatomic, strong) RACSignal *requestDataSignal;
+
+- (instancetype)initWithDate:(NSDate *)date;
 
 @end

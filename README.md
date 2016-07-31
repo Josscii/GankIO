@@ -1,5 +1,10 @@
 # GankIO
 A demonstration app with FRP and MVVM using http://gank.io/api.
+
+## 7.31
+
+用 MVVM 一开始就遇到了 tableview 的问题，看了 @雷纯锋 的代码，发现他用的 RACCommand 做请求，还没搞懂这一块，只是尝试写了一个 viewModle，顺便研究了一下 [RACMulticastConnection](http://www.jianshu.com/p/ad91314ccf66)。
+
 ## 7.24
 
 过了将近一个周才更新！只是初步做了首页，用到了一点 RAC，暂时没用 MVVM，好吧，实践起来还是比较慢的。继续研究！

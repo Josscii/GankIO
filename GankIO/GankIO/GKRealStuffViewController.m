@@ -8,15 +8,14 @@
 
 #import "GKRealStuffViewController.h"
 #import "GKRealStuffCell.h"
-#import "GKHttpClient.h"
-#import "RACSignal+MTL.h"
-#import "RealStuff.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "GKRealStuffViewModel.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 @interface GKRealStuffViewController ()
 
-@property (nonatomic, strong) NSArray *realStuffs;
+@property (nonatomic, strong) GKRealStuffViewModel *viewModel;
 
 @end
 
@@ -25,22 +24,14 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.realStuffs = @[];
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow: -48 * 60 * 60];
     
-    [[[[[GKHttpClient sharedClient] getGankDataFromDay:date] map:^id(id value) {
-         NSMutableArray *realStuffs = [NSMutableArray array];
-         NSDictionary *json = value;
-         NSArray *categories = json[@"category"];
-         NSDictionary *result = json[@"results"];
-         for (NSString *cate in categories) {
-             NSArray *rs = result[cate];
-             [realStuffs addObjectsFromArray:rs];
-         }
-         return realStuffs;
-    }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] subscribeNext:^(id x) {
-        self.realStuffs = x;
+    self.viewModel = [[GKRealStuffViewModel alloc] initWithDate:date];
+    
+    @weakify(self)
+    [self.viewModel.requestDataSignal subscribeNext:^(id x) {
+        @strongify(self)
         [self.tableView reloadData];
     }];
     
@@ -53,13 +44,13 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.realStuffs.count;
+    return self.viewModel.realStuffs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GKRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
     
-    [cell configreCellWithRealStuff:self.realStuffs[indexPath.row]];
+    [cell configreCellWithRealStuff:self.viewModel.realStuffs[indexPath.row]];
     
     return cell;
 }
