@@ -80,15 +80,21 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 }
 
 - (id)initWithEnabled:(RACSignal *)enabledSignal signalBlock:(RACSignal * (^)(id input))signalBlock {
+    // 保证 signalBlock 不为 nil
 	NSCParameterAssert(signalBlock != nil);
 
 	self = [super init];
 	if (self == nil) return nil;
-
+    
+    // 内部用于传递事件信号的信号
 	_addedExecutionSignalsSubject = [RACSubject new];
+    // 内部用于传递是否允许多个事件同时执行的布尔值流的信号
 	_allowsConcurrentExecutionSubject = [RACSubject new];
+    // 把外部传入的 signalBlock copy 一份保存下来
 	_signalBlock = [signalBlock copy];
-
+    
+    // 暴露给外部的执行事件的信号
+    // map 一次，并且用 catchTo 来忽略所有的错误
 	_executionSignals = [[[self.addedExecutionSignalsSubject
 		map:^(RACSignal *signal) {
 			return [signal catchTo:[RACSignal empty]];
@@ -101,6 +107,8 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	//
 	// In other words, if someone subscribes to `errors` _after_ an execution
 	// has started, it should still receive any error from that execution.
+    
+    // 这里用了一个 connection 来订阅所有的 signal 的 error
 	RACMulticastConnection *errorsConnection = [[[self.addedExecutionSignalsSubject
 		flattenMap:^(RACSignal *signal) {
 			return [[signal
@@ -115,6 +123,7 @@ const NSInteger RACCommandErrorNotEnabled = 1;
 	_errors = [errorsConnection.signal setNameWithFormat:@"%@ -errors", self];
 	[errorsConnection connect];
 
+    // 这里
 	RACSignal *immediateExecuting = [[[[self.addedExecutionSignalsSubject
 		flattenMap:^(RACSignal *signal) {
 			return [[[signal

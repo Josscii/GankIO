@@ -11,33 +11,69 @@
 #import "RealStuff.h"
 #import "RACSignal+MTL.h"
 
+@interface GKRealStuffViewModel ()
+
+@property (nonatomic, strong) RACSignal *signal;
+
+@end
+
 @implementation GKRealStuffViewModel
 
-
-- (instancetype)initWithDate:(NSDate *)date {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _date = date;
-        [self dataBinding];
+        [self initialize];
     }
-    
     return self;
 }
 
-- (void)dataBinding {
-    self.requestDataSignal = [[[[GKHttpClient sharedClient] getGankDataFromDay:self.date] map:^id(id value) {
-        NSMutableArray *realStuffs = [NSMutableArray array];
-        NSDictionary *json = value;
-        NSArray *categories = json[@"category"];
-        NSDictionary *result = json[@"results"];
-        for (NSString *cate in categories) {
-            NSArray *rs = result[cate];
-            [realStuffs addObjectsFromArray:rs];
-        }
-        return realStuffs;
-    }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]];
+- (void)initialize {
+    self.currentIndex = -1;
     
-    RAC(self, realStuffs) = self.requestDataSignal;
+    self.signal = RACObserve(self, history);
+    
+    self.requestRealStuffCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(NSString *dayString) {
+        return [[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:dayString] map:^id(NSDictionary *json) {
+            NSArray *categories = json[@"category"];
+            NSDictionary *result = json[@"results"];
+            return [[categories.rac_sequence map:^id(NSString *cate) {
+                return result[cate];
+            }] foldLeftWithStart:@[] reduce:^id(NSArray *accumulator, id value) {
+                return [accumulator arrayByAddingObjectsFromArray:value];
+            }];
+        }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]];
+    }];
+    
+    RAC(self, realStuffs) = [self.requestRealStuffCommand.executionSignals switchToLatest];
+    
+    self.requestHistoryCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [[[GKHttpClient sharedClient] getHistory] map:^id(id value) {
+            NSArray *results = value[@"results"];
+            return [[results.rac_sequence map:^id(NSString *dayString) {
+                return [dayString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+            }] array];
+        }];
+    }];
+    
+    RAC(self, history) = [self.requestHistoryCommand.executionSignals switchToLatest];
+    
+    [self.requestHistoryCommand execute:nil];
+    
+    [self loadNextRealStuff];
+}
+# pragma mark - 到底和到顶需要提示
+
+- (void)loadNextRealStuff {
+    [self.signal subscribeNext:^(id x) {
+        [self.requestRealStuffCommand execute:self.history[++self.currentIndex]];
+        self.title = self.history[self.currentIndex];
+    }];
+}
+
+- (void)loadPreRealStuff {
+    [self.signal subscribeNext:^(id x) {
+        [self.requestRealStuffCommand execute:self.history[--self.currentIndex]];
+    }];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 + (instancetype)sharedClient;
 
-- (RACSignal *)getGankDataFromDay:(NSDate *)date;
+- (RACSignal *)getHistory;
+- (RACSignal *)getGankRealStuffForOneDay:(NSString *)dayString;
 
 @end

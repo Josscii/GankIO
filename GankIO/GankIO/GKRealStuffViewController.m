@@ -17,6 +17,9 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 @property (nonatomic, strong) GKRealStuffViewModel *viewModel;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *preBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBarButtonItem;
+
 @end
 
 @implementation GKRealStuffViewController
@@ -25,16 +28,16 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow: -48 * 60 * 60];
-    
-    self.viewModel = [[GKRealStuffViewModel alloc] initWithDate:date];
+    self.viewModel = [[GKRealStuffViewModel alloc] init];
     
     @weakify(self)
-    [self.viewModel.requestDataSignal subscribeNext:^(id x) {
+    [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
         @strongify(self)
         [self.tableView reloadData];
     }];
     
+    RAC(self, title) = RACObserve(self.viewModel, title);
+
     [self configureLayout];
 }
 

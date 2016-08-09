@@ -9,3 +9,4 @@
 #import "GKNetworkConstants.h"
 
 NSString *const GKBaseApiURL = @"http://gank.io/api/";
+NSString *const GKHistoryURL = @"day/history";

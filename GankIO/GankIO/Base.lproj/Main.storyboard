@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Mm8-se-vNo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Mm8-se-vNo">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--干货-->
@@ -62,11 +63,20 @@
                             <outlet property="delegate" destination="9Zy-9L-llQ" id="JGc-2z-e0a"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="干货" id="joV-dR-0xw"/>
+                    <navigationItem key="navigationItem" title="干货" id="joV-dR-0xw">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Next" id="wIe-ds-0Ru"/>
+                            <barButtonItem title="Pre" id="1CX-RK-PxA"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nextBarButtonItem" destination="wIe-ds-0Ru" id="ffn-tc-XH0"/>
+                        <outlet property="preBarButtonItem" destination="1CX-RK-PxA" id="4f1-JF-hW5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8u-SM-LFh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="424" y="975"/>
+            <point key="canvasLocation" x="410" y="975"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9p9-6u-SZv">

@@ -11,11 +11,16 @@
 
 @interface GKRealStuffViewModel : NSObject
 
-@property (nonatomic, strong) NSDate *date;
-
 @property (nonatomic, copy) NSArray *realStuffs;
-@property (nonatomic, strong) RACSignal *requestDataSignal;
+@property (nonatomic, copy) NSArray *history;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, copy) NSString *title;
 
-- (instancetype)initWithDate:(NSDate *)date;
+@property (nonatomic, strong) RACCommand *requestRealStuffCommand;
+@property (nonatomic, strong) RACCommand *requestHistoryCommand;
+@property (nonatomic, strong) RACSignal *didReachLimitsSignal;
+
+- (void)loadPreRealStuff;
+- (void)loadNextRealStuff;
 
 @end

@@ -36,12 +36,12 @@
     return self;
 }
 
-- (RACSignal *)getGankDataFromDay:(NSDate *)date {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy/MM/dd";
-    NSString *urlString = [@"day/" stringByAppendingString:[formatter stringFromDate:date]];
-    
-    return [self.manager rac_GET:urlString];
+- (RACSignal *)getGankRealStuffForOneDay:(NSString *)dayString {
+    return [self.manager rac_GET:[NSString stringWithFormat:@"day/%@", dayString]];
+}
+
+- (RACSignal *)getHistory {
+    return [self.manager rac_GET:GKHistoryURL];
 }
 
 @end
