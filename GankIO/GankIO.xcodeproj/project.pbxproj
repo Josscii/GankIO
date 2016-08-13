@@ -16,6 +16,8 @@
 		BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B851D44F6380099979F /* AFHTTPSessionManager+RAC.m */; };
 		BB9E6B8C1D44FD910099979F /* RACSignal+MTL.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B8B1D44FD910099979F /* RACSignal+MTL.m */; };
 		BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */; };
+		BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */; };
+		BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA175371D5F186200FEB852 /* GKHistoryViewController.m */; };
 		BBFA9F691D3A9B49009440C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F681D3A9B49009440C6 /* main.m */; };
 		BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F6B1D3A9B49009440C6 /* AppDelegate.m */; };
 		BBFA9F721D3A9B49009440C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBFA9F701D3A9B49009440C6 /* Main.storyboard */; };
@@ -47,6 +49,10 @@
 		BB9E6B8B1D44FD910099979F /* RACSignal+MTL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACSignal+MTL.m"; sourceTree = "<group>"; };
 		BB9E6B8D1D4503EB0099979F /* MTLModel+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MTLModel+JSON.h"; sourceTree = "<group>"; };
 		BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MTLModel+JSON.m"; sourceTree = "<group>"; };
+		BBA175331D5DE8A900FEB852 /* GKPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPullHeaderView.h; sourceTree = "<group>"; };
+		BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPullHeaderView.m; sourceTree = "<group>"; };
+		BBA175361D5F186200FEB852 /* GKHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKHistoryViewController.h; sourceTree = "<group>"; };
+		BBA175371D5F186200FEB852 /* GKHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKHistoryViewController.m; sourceTree = "<group>"; };
 		BBFA9F641D3A9B49009440C6 /* GankIO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GankIO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBFA9F681D3A9B49009440C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBFA9F6A1D3A9B49009440C6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -96,6 +102,8 @@
 			children = (
 				BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */,
 				BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */,
+				BBA175361D5F186200FEB852 /* GKHistoryViewController.h */,
+				BBA175371D5F186200FEB852 /* GKHistoryViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -105,6 +113,8 @@
 			children = (
 				BB9E6B641D4399E90099979F /* GKRealStuffCell.h */,
 				BB9E6B651D4399E90099979F /* GKRealStuffCell.m */,
+				BBA175331D5DE8A900FEB852 /* GKPullHeaderView.h */,
+				BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -171,13 +181,13 @@
 				BBFA9F7E1D3A9B62009440C6 /* Network */,
 				BBFA9F6A1D3A9B49009440C6 /* AppDelegate.h */,
 				BBFA9F6B1D3A9B49009440C6 /* AppDelegate.m */,
+				BBFA9F8B1D3B146F009440C6 /* GKAppConstants.h */,
+				BBFA9F8C1D3B146F009440C6 /* GKAppConstants.m */,
 				BBFA9F701D3A9B49009440C6 /* Main.storyboard */,
 				BBFA9F731D3A9B49009440C6 /* Assets.xcassets */,
 				BBFA9F751D3A9B49009440C6 /* LaunchScreen.storyboard */,
 				BBFA9F781D3A9B49009440C6 /* Info.plist */,
 				BBFA9F671D3A9B49009440C6 /* Supporting Files */,
-				BBFA9F8B1D3B146F009440C6 /* GKAppConstants.h */,
-				BBFA9F8C1D3B146F009440C6 /* GKAppConstants.m */,
 			);
 			path = GankIO;
 			sourceTree = "<group>";
@@ -332,9 +342,11 @@
 				BB9E6B6E1D43A8E60099979F /* GKHttpClient.m in Sources */,
 				BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
+				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,
 				BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */,
 				BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */,
+				BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */,
 				BBFA9F691D3A9B49009440C6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

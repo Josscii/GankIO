@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_Height [UIScreen mainScreen].bounds.size.height
 
 typedef NS_ENUM(NSInteger, GKRealStuffKind) {
     GKRealStuffKindAndroid,
@@ -20,3 +22,6 @@ typedef NS_ENUM(NSInteger, GKRealStuffKind) {
     GKRealStuffKindVideo,
     GKRealStuffKindExtendResource
 };
+
+extern NSString *const GKPullToLoadPre;
+extern NSString *const GKLoosenToLoadPre;

@@ -18,9 +18,11 @@
 
 @property (nonatomic, strong) RACCommand *requestRealStuffCommand;
 @property (nonatomic, strong) RACCommand *requestHistoryCommand;
-@property (nonatomic, strong) RACSignal *didReachLimitsSignal;
 
+- (void)loadHistory;
 - (void)loadPreRealStuff;
 - (void)loadNextRealStuff;
+- (void)loadRandomRealStuff;
+- (void)loadRealStuffAtOneDay:(NSInteger)day;
 
 @end

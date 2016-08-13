@@ -1,6 +1,12 @@
 # GankIO
 A demonstration app with FRP and MVVM using http://gank.io/api.
 
+## 8.13
+
+基本完成了干货列表的一些基本功能：历史干货、随机干货、上一篇干货、下一篇干货。
+
+本来是想实现上拉拖动 tableView 到下一个 tableView 的，但是发现要高效的实现起来是比较困难的，希望下次更新能够带来这个功能。
+
 ## 8.9
 
 噢，这次终于基本弄懂了 RACCommand。但是在实践的过程中，准确的说是实践 RAC 的过程中还是发现一些问题：
