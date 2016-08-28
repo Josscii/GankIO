@@ -33,6 +33,8 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self configureLayout];
+    
     self.viewModel = [[GKRealStuffViewModel alloc] init];
     
     RAC(self, title) = RACObserve(self.viewModel, title);
@@ -43,7 +45,17 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
         [self.tableView reloadData];
     }];
     
-    [self configureLayout];
+    self.preBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        [self.viewModel loadPreRealStuff];
+        return [RACSignal empty];
+    }];
+    
+    self.nextBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        [self.viewModel loadNextRealStuff];
+        return [RACSignal empty];
+    }];
     
     [self.viewModel loadHistory];
     
@@ -53,14 +65,6 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 - (void)didPickAHistoryDay:(NSNotification *)notifi {
     NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
     [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
-}
-
-- (void)loadRealStuff:(id)sender {
-    if ([sender isEqual:self.nextBarButtonItem]) {
-        [self.viewModel loadNextRealStuff];
-    } else {
-        [self.viewModel loadPreRealStuff];
-    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -86,12 +90,6 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
                                   attribute:NSLayoutAttributeTop
                                  multiplier:1
                                    constant:0] setActive:YES];
-    
-    [self.nextBarButtonItem setTarget:self];
-    [self.nextBarButtonItem setAction:@selector(loadRealStuff:)];
-    
-    [self.preBarButtonItem setTarget:self];
-    [self.preBarButtonItem setAction:@selector(loadRealStuff:)];
     
     self.pullHeader.belowThresholdText = GKPullToLoadPre;
     self.pullHeader.overThresholdText = GKLoosenToLoadPre;
