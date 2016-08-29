@@ -14,22 +14,36 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - ARChromeActivity (1.0.5)
+  - KINWebBrowser (1.3.2):
+    - ARChromeActivity (= 1.0.5)
+    - TUSafariActivity (= 1.0.4)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
-  - ReactiveCocoa (4.2.1):
-    - Result (~> 2.0)
-  - Result (2.1.3)
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
+  - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.1.0)
+  - AFNetworking
+  - KINWebBrowser
   - Mantle (~> 2.0.7)
-  - ReactiveCocoa (~> 4.2.1)
+  - ReactiveCocoa (~> 2.5)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  ARChromeActivity: 821c7849b566f49583987468733a896fee35aa4d
+  KINWebBrowser: 27aa857a2aa39063ed102cca781d130b679d205f
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
-  ReactiveCocoa: 5a42745f11ea236f405bb9ce5e97c5e3b23562dd
-  Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 8600f79bdc929af90165ffc01bdd0cff9656d771
+
+COCOAPODS: 1.0.1

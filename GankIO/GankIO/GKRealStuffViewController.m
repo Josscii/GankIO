@@ -13,6 +13,7 @@
 #import "GKPullHeaderView.h"
 #import "GKAppConstants.h"
 #import "GKHistoryViewController.h"
+#import "KINWebBrowser/KINWebBrowserViewController.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
@@ -43,6 +44,10 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
         @strongify(self)
         [self.tableView reloadData];
+    }];
+    
+    [self.viewModel.requestRealStuffCommand.executing subscribeNext:^(NSNumber *x) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = x.boolValue;
     }];
     
     self.preBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -97,6 +102,8 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 #pragma mark - scrollview delegate
 
+// would it be great if replace these with rac_signalForSelector ?
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.pullHeader.overThreshold = scrollView.contentOffset.y < -120;
     self.pullHeader.viewHeightConstraint.constant = MAX(-(scrollView.contentOffset.y + 64), 0);
@@ -124,6 +131,12 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
+    
+    RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
+    
+    KINWebBrowserViewController *webBrowser = [KINWebBrowserViewController webBrowser];
+    [self.navigationController pushViewController:webBrowser animated:YES];
+    [webBrowser loadURLString:realStuff.url];
 }
 
 @end

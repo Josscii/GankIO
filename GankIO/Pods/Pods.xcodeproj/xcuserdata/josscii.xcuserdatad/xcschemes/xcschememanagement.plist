@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ARChromeActivity.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>KINWebBrowser.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Mantle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -24,7 +34,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Result.xcscheme</key>
+		<key>TUSafariActivity-TUSafariActivity.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>TUSafariActivity.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,7 +47,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>03857CB7ED3EB7019D4BEDE0F18E2FB3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B0EBA1FCFE4D6C9EFCDE41735756990</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47F44A33BD3BBA735E59147217641B65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,17 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>891382FB61C0B7A2217A6C93E02A6F31</key>
+		<key>CBBAC4E0146B4FD186B0026F84E671C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A6B639DBAA0E16F36F4BCC1D3D5FBA96</key>
+		<key>E6AD6FC6EDD818FDA972D3A1556EEB5C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EE2DAEE1FB6EDF0926E665630D6FF86A</key>
+		<key>F301D6BF8499987D6F3FACC8470C7939</key>
 		<dict>
 			<key>primary</key>
 			<true/>
