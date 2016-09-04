@@ -13,6 +13,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"历史";
     self.tableView.backgroundColor = [UIColor whiteColor];
 }
 

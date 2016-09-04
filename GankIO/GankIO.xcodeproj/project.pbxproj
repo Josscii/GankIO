@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41F1362D5192844C9547CC35 /* Pods_GankIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E017348744605F04BFD219E9 /* Pods_GankIO.framework */; };
+		BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290D9D1D7ABF3600B05777 /* GKDBManager.m */; };
 		BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */; };
 		BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B651D4399E90099979F /* GKRealStuffCell.m */; };
 		BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B691D43A0290099979F /* UIColor+GKColors.m */; };
@@ -29,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB290D9C1D7ABF3600B05777 /* GKDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDBManager.h; sourceTree = "<group>"; };
+		BB290D9D1D7ABF3600B05777 /* GKDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDBManager.m; sourceTree = "<group>"; };
 		BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffViewController.h; sourceTree = "<group>"; };
 		BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffViewController.m; sourceTree = "<group>"; };
 		BB9E6B641D4399E90099979F /* GKRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffCell.h; sourceTree = "<group>"; };
@@ -95,6 +98,15 @@
 				E017348744605F04BFD219E9 /* Pods_GankIO.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BB290D9B1D7ABEF500B05777 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				BB290D9C1D7ABF3600B05777 /* GKDBManager.h */,
+				BB290D9D1D7ABF3600B05777 /* GKDBManager.m */,
+			);
+			name = DataBase;
 			sourceTree = "<group>";
 		};
 		BB9E6B5C1D4396D80099979F /* View Controllers */ = {
@@ -179,6 +191,7 @@
 				BB9E6B601D4397140099979F /* Views */,
 				BB9E6B5C1D4396D80099979F /* View Controllers */,
 				BBFA9F7E1D3A9B62009440C6 /* Network */,
+				BB290D9B1D7ABEF500B05777 /* DataBase */,
 				BBFA9F6A1D3A9B49009440C6 /* AppDelegate.h */,
 				BBFA9F6B1D3A9B49009440C6 /* AppDelegate.m */,
 				BBFA9F8B1D3B146F009440C6 /* GKAppConstants.h */,
@@ -344,6 +357,7 @@
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
 				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,
+				BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */,
 				BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */,
 				BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */,
 				BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */,

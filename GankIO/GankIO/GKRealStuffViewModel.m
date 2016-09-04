@@ -10,6 +10,7 @@
 #import "GKHttpClient.h"
 #import "RealStuff.h"
 #import "RACSignal+MTL.h"
+#import "GKDBManager.h"
 
 @interface GKRealStuffViewModel ()
 
@@ -31,26 +32,52 @@
     self.currentIndex = -1;
     
     self.requestHistoryCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [[[GKHttpClient sharedClient] getHistory] map:^id(id value) {
-            NSArray *results = value[@"results"];
-            return [[results.rac_sequence map:^id(NSString *dayString) {
-                return [dayString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
-            }] array];
+        __block RACSignal *signal;
+        
+        [[[GKDBManager defaultManager] fetchHistory] subscribeNext:^(id x) {
+            signal = [RACSignal return:x];
+        } error:^(NSError *error) {
+            signal = [[[[GKHttpClient sharedClient] getHistory] map:^id(id value) {
+                NSArray *results = value[@"results"];
+                return [[results.rac_sequence map:^id(NSString *dayString) {
+                    return [dayString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+                }] array];
+            }] doNext:^(NSArray *history) {
+                [history enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [[[GKDBManager defaultManager] saveHistory:obj] subscribeNext:^(id x) {
+                        NSLog(@"saved history successfully of %@", x);
+                    }];
+                }];
+            }];
         }];
+        
+        return signal;
     }];
     
     RAC(self, history) = [self.requestHistoryCommand.executionSignals switchToLatest];
     
     self.requestRealStuffCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(NSString *dayString) {
-        return [[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:dayString] map:^id(NSDictionary *json) {
-            NSArray *categories = json[@"category"];
-            NSDictionary *result = json[@"results"];
-            return [[categories.rac_sequence map:^id(NSString *cate) {
-                return result[cate];
-            }] foldLeftWithStart:@[] reduce:^id(NSArray *accumulator, id value) {
-                return [accumulator arrayByAddingObjectsFromArray:value];
+        __block RACSignal *signal;
+        
+        [[[GKDBManager defaultManager] fetchRealStuffsOfDay:dayString] subscribeNext:^(id x) {
+            signal = [RACSignal return:x];
+        } error:^(NSError *error) {
+            signal = [[[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:dayString] map:^id(NSDictionary *json) {
+                NSArray *categories = json[@"category"];
+                NSDictionary *result = json[@"results"];
+                return [[categories.rac_sequence map:^id(NSString *cate) {
+                    return result[cate];
+                }] foldLeftWithStart:@[] reduce:^id(NSArray *accumulator, id value) {
+                    return [accumulator arrayByAddingObjectsFromArray:value];
+                }];
+            }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] doNext:^(id x) {
+                [[[GKDBManager defaultManager] saveRealStuffs:x ofDay:dayString] subscribeNext:^(id x) {
+                    NSLog(@"saved realstuffs successfully of %@", dayString);
+                }];
             }];
-        }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]];
+        }];
+        
+        return signal;
     }];
     
     RAC(self, realStuffs) = [self.requestRealStuffCommand.executionSignals switchToLatest];

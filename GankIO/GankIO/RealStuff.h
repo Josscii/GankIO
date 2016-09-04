@@ -12,6 +12,11 @@
 
 @interface RealStuff : MTLModel <MTLJSONSerializing>
 
+- (instancetype)initWithDesc:(NSString *)desc
+                        type:(NSString *)type
+                         url:(NSString *)url
+                         who:(NSString *)who;
+
 @property (nonatomic, copy) NSString *desc;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *url;

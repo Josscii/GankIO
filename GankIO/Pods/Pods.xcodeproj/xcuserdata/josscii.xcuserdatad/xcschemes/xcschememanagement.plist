@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KINWebBrowser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,7 +67,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>23CF27B2BA6AC7125EFFEDA8C5AA819F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>47F44A33BD3BBA735E59147217641B65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5502F21B2EE259CBFB30374E959BFB8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,17 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>980431B65CACC7B63FE62983D0980AE6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CBBAC4E0146B4FD186B0026F84E671C2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6AD6FC6EDD818FDA972D3A1556EEB5C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F301D6BF8499987D6F3FACC8470C7939</key>
 		<dict>
 			<key>primary</key>
 			<true/>
