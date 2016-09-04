@@ -82,7 +82,7 @@
                     <navigationItem key="navigationItem" title="干货" id="PsH-Lg-gTv">
                         <barButtonItem key="leftBarButtonItem" title="History" id="NdE-22-ahQ">
                             <connections>
-                                <segue destination="CAj-El-4Bh" kind="show" identifier="history" id="Wfu-bS-PC2"/>
+                                <segue destination="CAj-El-4Bh" kind="presentation" identifier="history" id="XHy-OR-L3i"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -138,7 +138,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AUx-2c-brx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1872" y="310"/>
+            <point key="canvasLocation" x="1923" y="310"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yf0-ac-uYF">
@@ -174,7 +174,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BlY-AU-37m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1209" y="310"/>
+            <point key="canvasLocation" x="1234" y="310"/>
         </scene>
     </scenes>
 </document>

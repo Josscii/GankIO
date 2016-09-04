@@ -21,6 +21,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+
+#pragma mark - tableview
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.history.count;
 }
