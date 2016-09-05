@@ -8,7 +8,7 @@
 
 #import "GKDBManager.h"
 #import "FMDB/FMDB.h"
-#import "RealStuff.h"
+#import "GKProtocols.h"
 
 #define ERROR_DOMAIN @"com.gank.io"
 #define EXPIRE_TIME 60 * 60 * 24
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, GKError) {
             NSString *historySQL = @"create table if not exists history(id integer primary key autoincrement, day text, updatetime real)";
             [_database executeUpdate:historySQL];
             
-            NSString *realstuffSQL = @"create table if not exists realstuff(id integer primary key autoincrement, desc text, type text, url text, who text, day text, foreign key (day) references history(day))";
+            NSString *realstuffSQL = @"create table if not exists realstuff(id integer primary key autoincrement, desc text, type text, url text, who text, isFavorite integer, day text, foreign key (day) references history(day))";
             [_database executeUpdate:realstuffSQL];
             
             [_database close];
@@ -59,6 +59,8 @@ typedef NS_ENUM(NSUInteger, GKError) {
     
     return self;
 }
+
+#pragma mark - history
 
 - (RACSignal *)saveHistory:(NSString *)day {
     @weakify(self)
@@ -122,13 +124,15 @@ typedef NS_ENUM(NSUInteger, GKError) {
     }];
 }
 
+#pragma mark - realstuff
+
 - (RACSignal *)saveRealStuffs:(NSArray *)realStuffs ofDay:(NSString *)day {
     @weakify(self)
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         @strongify(self)
         if ([self.database open]) {
             [realStuffs enumerateObjectsUsingBlock:^(RealStuff * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self.database executeUpdate:@"INSERT INTO realstuff (desc, type, url, who, day) VALUES (?, ?, ?, ?, ?)", obj.desc, obj.type, obj.url, obj.who, day];
+                [self.database executeUpdate:@"INSERT INTO realstuff (desc, type, url, who, isFavorite, day) VALUES (?, ?, ?, ?, ?, ?)", obj.desc, obj.type, obj.url, obj.who, @(obj.isFavorite), day];
             }];
             [subscriber sendNext:day];
             [subscriber sendCompleted];
@@ -138,25 +142,55 @@ typedef NS_ENUM(NSUInteger, GKError) {
     }];
 }
 
-- (RACSignal *)fetchRealStuffsOfDay:(NSString *)day {
-    @weakify(self);
+- (RACSignal *)markRealStuff:(RealStuff *)rs AsFavorite:(NSInteger)favorite {
+    @weakify(self)
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         @strongify(self)
-        NSMutableArray *realStuffs = [NSMutableArray array];
         if ([self.database open]) {
-            FMResultSet *s = [self.database executeQuery:@"SELECT * FROM realstuff where day = ?", day];
-            while ([s next]) {
-                NSString *desc = [s objectForColumnName:@"desc"];
-                NSString *type = [s objectForColumnName:@"type"];
-                NSString *url = [s objectForColumnName:@"url"];
-                NSString *who = [s objectForColumnName:@"who"];
-                RealStuff *realStuff = [[RealStuff alloc] initWithDesc:desc type:type url:url who:who];
-                [realStuffs addObject:realStuff];
+            NSString *updateSQL = @"update realstuff set isFavorite = (?) where desc = (?)";
+            BOOL ok = [self.database executeUpdate:updateSQL, @(favorite), rs.desc];
+            if (ok) {
+                [subscriber sendNext:@(ok)];
+                [subscriber sendCompleted];
+            } else {
+                NSError *error = [NSError errorWithDomain:ERROR_DOMAIN code:GKNoDataError userInfo:@{@"desc": @"No Data Found"}];
+                [subscriber sendError:error];
             }
             [self.database close];
         }
-        if (realStuffs.count != 0) {
-            [subscriber sendNext:realStuffs];
+        return nil;
+    }];
+}
+
+- (RACSignal *)selectRealStuffsOfDay:(NSString *)day {
+    NSString *selectSQL = @"SELECT * FROM realstuff where day = (?)";
+    return [self selectResultWithSQL:selectSQL modelClass:[RealStuff class] selectors:@[day]];
+}
+
+- (RACSignal *)selectFavoriteRealStuffs {
+    NSString *selectSQL = @"select * from realstuff where isFavorite = (?)";
+    return [self selectResultWithSQL:selectSQL modelClass:[RealStuff class] selectors:@[@(1)]];
+}
+
+#pragma mark - helper method
+
+// http://stackoverflow.com/questions/19200538/how-to-access-va-list-inside-subsequent-block
+// va_list can't used by another block
+
+- (RACSignal *)selectResultWithSQL:(NSString *)sql modelClass:(Class<GKModelProtocol>)klass selectors:(NSArray *)selectors {
+    @weakify(self);
+    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        @strongify(self)
+        NSMutableArray *results = [NSMutableArray array];
+        if ([self.database open]) {
+            FMResultSet *s = [self.database executeQuery:sql withArgumentsInArray:selectors];
+            while ([s next]) {
+                [results addObject:[klass modelWithResultSet: s]];
+            }
+            [self.database close];
+        }
+        if (results.count != 0) {
+            [subscriber sendNext:results];
             [subscriber sendCompleted];
         } else {
             NSError *error = [NSError errorWithDomain:ERROR_DOMAIN code:GKNoDataError userInfo:@{@"desc": @"No Data Found"}];
@@ -164,6 +198,8 @@ typedef NS_ENUM(NSUInteger, GKError) {
         }
         return nil;
     }];
+    
+    return signal;
 }
 
 @end

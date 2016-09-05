@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ReactiveCocoa/ReactiveCocoa.h"
+#import "RealStuff.h"
 
 @interface GKDBManager : NSObject
 
@@ -17,6 +18,8 @@
 - (RACSignal *)fetchHistory;
 
 - (RACSignal *)saveRealStuffs:(NSArray *)realStuffs ofDay:(NSString *)day;
-- (RACSignal *)fetchRealStuffsOfDay:(NSString *)day;
+- (RACSignal *)selectRealStuffsOfDay:(NSString *)day;
+- (RACSignal *)selectFavoriteRealStuffs;
+- (RACSignal *)markRealStuff:(RealStuff *)rs AsFavorite:(NSInteger)favorite;
 
 @end

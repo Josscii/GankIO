@@ -9,17 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "GKAppConstants.h"
 #import <Mantle/Mantle.h>
+#import "GKProtocols.h"
 
-@interface RealStuff : MTLModel <MTLJSONSerializing>
-
-- (instancetype)initWithDesc:(NSString *)desc
-                        type:(NSString *)type
-                         url:(NSString *)url
-                         who:(NSString *)who;
+@interface RealStuff : MTLModel <MTLJSONSerializing, GKModelProtocol>
 
 @property (nonatomic, copy) NSString *desc;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *who;
+@property (nonatomic, assign) NSInteger isFavorite;
+
+- (instancetype)initWithDesc:(NSString *)desc
+                        type:(NSString *)type
+                         url:(NSString *)url
+                         who:(NSString *)who
+                  isFavorite:(NSInteger)isFavorite;
 
 @end

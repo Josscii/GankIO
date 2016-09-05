@@ -14,6 +14,7 @@
 #import "GKAppConstants.h"
 #import "GKHistoryViewController.h"
 #import "KINWebBrowser/KINWebBrowserViewController.h"
+#import "GKDBManager.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
@@ -38,7 +39,7 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     
     self.viewModel = [[GKRealStuffViewModel alloc] init];
     
-    RAC(self, title) = RACObserve(self.viewModel, title);
+    RAC(self, navigationItem.title) = RACObserve(self.viewModel, title);
     
     @weakify(self)
     [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
@@ -98,6 +99,8 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     
     self.pullHeader.belowThresholdText = GKPullToLoadPre;
     self.pullHeader.overThresholdText = GKLoosenToLoadPre;
+    
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark - scrollview delegate
@@ -135,8 +138,33 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
     
     KINWebBrowserViewController *webBrowser = [KINWebBrowserViewController webBrowser];
+    webBrowser.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:webBrowser animated:YES];
     [webBrowser loadURLString:realStuff.url];
 }
 
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
+    NSString *title = !realStuff.isFavorite ? @"收藏" : @"取消收藏";
+    
+    UITableViewRowAction *saveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:title handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[[GKDBManager defaultManager] markRealStuff:realStuff AsFavorite:!realStuff.isFavorite] subscribeNext:^(id x) {
+            realStuff.isFavorite = !realStuff.isFavorite;
+            tableView.editing = NO;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
+    }];
+    
+    saveAction.backgroundColor = [UIColor brownColor];
+    
+    return @[saveAction];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // iOS 8
+}
 @end

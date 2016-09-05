@@ -15,13 +15,15 @@
 - (instancetype)initWithDesc:(NSString *)desc
                         type:(NSString *)type
                          url:(NSString *)url
-                         who:(NSString *)who {
+                         who:(NSString *)who
+                  isFavorite:(NSInteger)isFavorite {
     self = [super init];
     if (self) {
         _desc = desc;
         _type = type;
         _url = url;
         _who = who;
+        _isFavorite = isFavorite;
     }
     return self;
 }
@@ -37,24 +39,15 @@
              };
 }
 
-#pragma mark - NSCoding
+#pragma mark - GKModelProtocol
 
-- (id)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-        self.desc = [coder decodeObjectForKey:@"desc"];
-        self.type = [coder decodeObjectForKey:@"type"];
-        self.url = [coder decodeObjectForKey:@"url"];
-        self.who = [coder decodeObjectForKey:@"who"];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:self.desc forKey:@"desc"];
-    [coder encodeObject:self.type forKey:@"type"];
-    [coder encodeObject:self.url forKey:@"url"];
-    [coder encodeObject:self.who forKey:@"who"];
++ (instancetype)modelWithResultSet:(FMResultSet *)s {
+    NSString *desc = [s objectForColumnName:@"desc"];
+    NSString *type = [s objectForColumnName:@"type"];
+    NSString *url = [s objectForColumnName:@"url"];
+    NSString *who = [s objectForColumnName:@"who"];
+    NSInteger isFavorite = [s intForColumn:@"isFavorite"];
+    return [[RealStuff alloc] initWithDesc:desc type:type url:url who:who isFavorite:isFavorite];
 }
 
 @end

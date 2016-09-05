@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "RealStuff.h"
 
 @interface GKRealStuffViewModel : NSObject
 

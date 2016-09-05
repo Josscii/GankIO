@@ -8,7 +8,6 @@
 
 #import "GKRealStuffViewModel.h"
 #import "GKHttpClient.h"
-#import "RealStuff.h"
 #import "RACSignal+MTL.h"
 #import "GKDBManager.h"
 
@@ -59,7 +58,7 @@
     self.requestRealStuffCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(NSString *dayString) {
         __block RACSignal *signal;
         
-        [[[GKDBManager defaultManager] fetchRealStuffsOfDay:dayString] subscribeNext:^(id x) {
+        [[[GKDBManager defaultManager] selectRealStuffsOfDay:dayString] subscribeNext:^(id x) {
             signal = [RACSignal return:x];
         } error:^(NSError *error) {
             signal = [[[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:dayString] map:^id(NSDictionary *json) {
@@ -127,4 +126,5 @@
     [self.requestRealStuffCommand execute:self.history[day]];
     self.currentIndex = day;
 }
+
 @end

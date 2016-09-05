@@ -1,6 +1,19 @@
 # GankIO
 A demonstration app with FRP and MVVM using http://gank.io/api.
 
+## 9.5
+
+今天下定决心把这个项目继续做下去，争取做得比较完善，接下来的计划是：
+
+- [ ] history 分类
+- [ ] 记住上次位置
+- [ ] 加载动画
+- [ ] 收藏
+- [ ] 搜索
+- [ ] 摇一摇随机一篇
+- [ ] 上拉下一篇，下拉上一篇
+不分先后啦，慢慢来。
+
 ## 9.4
 
 用 FMDB(sqlite) 做了存储，后面的计划是改进一下 UI，继续实践 ReactiveCocoa，另外开始准备学习并迁移到 RxSwift 和 RAC 4。

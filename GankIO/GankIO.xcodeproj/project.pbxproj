@@ -32,6 +32,7 @@
 /* Begin PBXFileReference section */
 		BB290D9C1D7ABF3600B05777 /* GKDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDBManager.h; sourceTree = "<group>"; };
 		BB290D9D1D7ABF3600B05777 /* GKDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDBManager.m; sourceTree = "<group>"; };
+		BB290DA21D7D445A00B05777 /* GKProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKProtocols.h; sourceTree = "<group>"; };
 		BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffViewController.h; sourceTree = "<group>"; };
 		BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffViewController.m; sourceTree = "<group>"; };
 		BB9E6B641D4399E90099979F /* GKRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffCell.h; sourceTree = "<group>"; };
@@ -142,6 +143,7 @@
 				BB9E6B8B1D44FD910099979F /* RACSignal+MTL.m */,
 				BB9E6B8D1D4503EB0099979F /* MTLModel+JSON.h */,
 				BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */,
+				BB290DA21D7D445A00B05777 /* GKProtocols.h */,
 			);
 			name = Category;
 			sourceTree = "<group>";
