@@ -11,6 +11,7 @@
 		BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290D9D1D7ABF3600B05777 /* GKDBManager.m */; };
 		BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */; };
 		BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */; };
+		BB290DAB1D7E660F00B05777 /* GKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DAA1D7E660F00B05777 /* GKLoadingView.m */; };
 		BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */; };
 		BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B651D4399E90099979F /* GKRealStuffCell.m */; };
 		BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B691D43A0290099979F /* UIColor+GKColors.m */; };
@@ -39,6 +40,8 @@
 		BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKFeatureViewController.m; sourceTree = "<group>"; };
 		BB290DA61D7DB0E400B05777 /* GKFeatureViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKFeatureViewModel.h; sourceTree = "<group>"; };
 		BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKFeatureViewModel.m; sourceTree = "<group>"; };
+		BB290DA91D7E660F00B05777 /* GKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLoadingView.h; sourceTree = "<group>"; };
+		BB290DAA1D7E660F00B05777 /* GKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLoadingView.m; sourceTree = "<group>"; };
 		BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffViewController.h; sourceTree = "<group>"; };
 		BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffViewController.m; sourceTree = "<group>"; };
 		BB9E6B641D4399E90099979F /* GKRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffCell.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				BB9E6B651D4399E90099979F /* GKRealStuffCell.m */,
 				BBA175331D5DE8A900FEB852 /* GKPullHeaderView.h */,
 				BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */,
+				BB290DA91D7E660F00B05777 /* GKLoadingView.h */,
+				BB290DAA1D7E660F00B05777 /* GKLoadingView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				BB9E6B6E1D43A8E60099979F /* GKHttpClient.m in Sources */,
 				BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */,
 				BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */,
+				BB290DAB1D7E660F00B05777 /* GKLoadingView.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
 				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,

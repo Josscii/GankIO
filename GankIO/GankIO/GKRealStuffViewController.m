@@ -15,6 +15,7 @@
 #import "GKHistoryViewController.h"
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKDBManager.h"
+#import "GKLoadingView.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
@@ -26,6 +27,7 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBarButtonItem;
 
 @property (nonatomic, strong) GKPullHeaderView *pullHeader;
+@property (nonatomic, strong) GKLoadingView *loadingView;
 
 @end
 
@@ -49,6 +51,11 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     
     [self.viewModel.requestRealStuffCommand.executing subscribeNext:^(NSNumber *x) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = x.boolValue;
+        if (x.boolValue) {
+            [self.loadingView startLoading];
+        } else {
+            [self.loadingView stopLoading];
+        }
     }];
     
     self.preBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -116,6 +123,16 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     self.pullHeader.overThresholdText = GKLoosenToLoadPre;
     
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    
+    self.loadingView = [[GKLoadingView alloc] init];
+    [self.loadingView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.view addSubview:self.loadingView];
+    
+    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0].active = YES;
 }
 
 #pragma mark - scrollview delegate
