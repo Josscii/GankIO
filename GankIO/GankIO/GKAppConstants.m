@@ -10,3 +10,6 @@
 
 NSString *const GKPullToLoadPre = @"下拉随机加载";
 NSString *const GKLoosenToLoadPre = @"松开开始加载";
+
+NSString *const GKDidPickAHistoryDayNotification = @"GKDidPickAHistoryDayNotification";
+NSString *const GKDidUnMarkRealStuffNotification = @"GKDidUnMarkRealStuffNotification";

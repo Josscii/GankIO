@@ -96,9 +96,10 @@ typedef NS_ENUM(NSUInteger, GKError) {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         @strongify(self)
         if ([self.database open]) {
+            NSError *error = nil;
             NSMutableArray *history = [NSMutableArray array];
             FMResultSet *s = [self.database executeQuery:@"select * from history"];
-            while ([s next]) {
+            while ([s nextWithError:&error]) {
                 NSString *day = [s objectForColumnName:@"day"];
                 NSDate *lastUpdateTime = [NSDate dateWithTimeIntervalSince1970:[s doubleForColumn:@"updatetime"]];
                 NSDate *now = [NSDate date];
@@ -111,11 +112,10 @@ typedef NS_ENUM(NSUInteger, GKError) {
                 
                 [history addObject:day];
             }
-            if (history.count != 0) {
+            if (!error) {
                 [subscriber sendNext:[history copy]];
                 [subscriber sendCompleted];
             } else {
-                NSError *error = [NSError errorWithDomain:ERROR_DOMAIN code:GKNoDataError userInfo:@{@"desc": @"No Data Found"}];
                 [subscriber sendError:error];
             }
             [self.database close];
@@ -183,18 +183,18 @@ typedef NS_ENUM(NSUInteger, GKError) {
         @strongify(self)
         NSMutableArray *results = [NSMutableArray array];
         if ([self.database open]) {
+            NSError *error = nil;
             FMResultSet *s = [self.database executeQuery:sql withArgumentsInArray:selectors];
-            while ([s next]) {
+            while ([s nextWithError:&error]) {
                 [results addObject:[klass modelWithResultSet: s]];
             }
+            if (!error) {
+                [subscriber sendNext:results];
+                [subscriber sendCompleted];
+            } else {
+                [subscriber sendError:error];
+            }
             [self.database close];
-        }
-        if (results.count != 0) {
-            [subscriber sendNext:results];
-            [subscriber sendCompleted];
-        } else {
-            NSError *error = [NSError errorWithDomain:ERROR_DOMAIN code:GKNoDataError userInfo:@{@"desc": @"No Data Found"}];
-            [subscriber sendError:error];
         }
         return nil;
     }];

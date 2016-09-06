@@ -63,14 +63,29 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
         return [RACSignal empty];
     }];
     
-    [self.viewModel loadHistory];
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidPickAHistoryDayNotification object:nil]
+      takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(NSNotification *notifi) {
+         @strongify(self)
+         NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
+         [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
+    }];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPickAHistoryDay:) name:@"GKDidPickAHistoryDay" object:nil];
-}
-
-- (void)didPickAHistoryDay:(NSNotification *)notifi {
-    NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
-    [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidUnMarkRealStuffNotification object:nil]
+      takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(NSNotification *notifi) {
+         @strongify(self)
+         RealStuff *rs = notifi.userInfo[@"realstuff"];
+         [self.viewModel.realStuffs enumerateObjectsUsingBlock:^(RealStuff * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+             if ([rs.desc isEqualToString:obj.desc]) {
+                 obj.isFavorite = 0;
+                 [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                 *stop = YES;
+             }
+         }];
+    }];
+    
+    [self.viewModel loadHistory];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

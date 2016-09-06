@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		41F1362D5192844C9547CC35 /* Pods_GankIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E017348744605F04BFD219E9 /* Pods_GankIO.framework */; };
 		BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290D9D1D7ABF3600B05777 /* GKDBManager.m */; };
+		BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */; };
+		BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */; };
 		BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */; };
 		BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B651D4399E90099979F /* GKRealStuffCell.m */; };
 		BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B691D43A0290099979F /* UIColor+GKColors.m */; };
@@ -33,6 +35,10 @@
 		BB290D9C1D7ABF3600B05777 /* GKDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDBManager.h; sourceTree = "<group>"; };
 		BB290D9D1D7ABF3600B05777 /* GKDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDBManager.m; sourceTree = "<group>"; };
 		BB290DA21D7D445A00B05777 /* GKProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKProtocols.h; sourceTree = "<group>"; };
+		BB290DA31D7D9F9600B05777 /* GKFeatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKFeatureViewController.h; sourceTree = "<group>"; };
+		BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKFeatureViewController.m; sourceTree = "<group>"; };
+		BB290DA61D7DB0E400B05777 /* GKFeatureViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKFeatureViewModel.h; sourceTree = "<group>"; };
+		BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKFeatureViewModel.m; sourceTree = "<group>"; };
 		BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffViewController.h; sourceTree = "<group>"; };
 		BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffViewController.m; sourceTree = "<group>"; };
 		BB9E6B641D4399E90099979F /* GKRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffCell.h; sourceTree = "<group>"; };
@@ -117,6 +123,8 @@
 				BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */,
 				BBA175361D5F186200FEB852 /* GKHistoryViewController.h */,
 				BBA175371D5F186200FEB852 /* GKHistoryViewController.m */,
+				BB290DA31D7D9F9600B05777 /* GKFeatureViewController.h */,
+				BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -162,6 +170,8 @@
 			children = (
 				BB9E6B771D44B6580099979F /* GKRealStuffViewModel.h */,
 				BB9E6B781D44B6580099979F /* GKRealStuffViewModel.m */,
+				BB290DA61D7DB0E400B05777 /* GKFeatureViewModel.h */,
+				BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -355,6 +365,7 @@
 				BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */,
 				BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */,
 				BB9E6B6E1D43A8E60099979F /* GKHttpClient.m in Sources */,
+				BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */,
 				BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
 				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
@@ -363,6 +374,7 @@
 				BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */,
 				BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */,
 				BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */,
+				BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */,
 				BBFA9F691D3A9B49009440C6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

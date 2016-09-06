@@ -7,6 +7,7 @@
 //
 
 #import "GKHistoryViewController.h"
+#import "GKAppConstants.h"
 
 @implementation GKHistoryViewController
 
@@ -20,8 +21,6 @@
 - (IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 #pragma mark - tableview
 
@@ -39,7 +38,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GKDidPickAHistoryDay" object:nil userInfo:@{@"pickedIndex": @(indexPath.row)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:GKDidPickAHistoryDayNotification object:nil userInfo:@{@"pickedIndex": @(indexPath.row)}];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

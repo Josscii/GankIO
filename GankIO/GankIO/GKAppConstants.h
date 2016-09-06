@@ -25,3 +25,6 @@ typedef NS_ENUM(NSInteger, GKRealStuffKind) {
 
 extern NSString *const GKPullToLoadPre;
 extern NSString *const GKLoosenToLoadPre;
+
+extern NSString *const GKDidPickAHistoryDayNotification;
+extern NSString *const GKDidUnMarkRealStuffNotification;

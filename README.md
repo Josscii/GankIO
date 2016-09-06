@@ -11,7 +11,7 @@ A demonstration app with FRP and MVVM using http://gank.io/api.
 
 - [ ] 加载动画
 
-- [ ] 收藏
+- [x] 收藏
 
 - [ ] 搜索
 
