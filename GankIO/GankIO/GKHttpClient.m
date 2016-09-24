@@ -44,4 +44,9 @@
     return [self.manager rac_GET:GKHistoryURL];
 }
 
+- (RACSignal *)searchRealStuffsWithKeyword:(NSString *)key inCategory:(NSString *)category count:(NSInteger)count perPage:(NSInteger)page {
+    NSString *url = [[GKSearchURL stringByAppendingString:[NSString stringWithFormat:@"%@/category/%@/count/%lu/page/%lu", key, category, (long)count, (long)page]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [self.manager rac_GET:url];
+}
+
 @end

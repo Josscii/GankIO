@@ -10,3 +10,4 @@
 
 extern NSString *const GKBaseApiURL;
 extern NSString *const GKHistoryURL;
+extern NSString *const GKSearchURL;

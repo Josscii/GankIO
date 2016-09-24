@@ -11,6 +11,7 @@
 #import "GKFeatureViewModel.h"
 #import "GKDBManager.h"
 #import "GKAppConstants.h"
+#import "KINWebBrowser/KINWebBrowserViewController.h"
 
 @interface GKFeatureViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -34,6 +35,7 @@
     
     self.tableView.estimatedRowHeight = 68;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
     
     [self loadData];
 }
@@ -57,6 +59,17 @@
     [cell configreCellWithRealStuff:self.viewModel.realStuffs[indexPath.row]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    
+    RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
+    
+    KINWebBrowserViewController *webBrowser = [KINWebBrowserViewController webBrowser];
+    webBrowser.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webBrowser animated:YES];
+    [webBrowser loadURLString:realStuff.url];
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {

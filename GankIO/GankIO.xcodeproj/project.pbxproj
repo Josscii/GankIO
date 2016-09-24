@@ -12,6 +12,11 @@
 		BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */; };
 		BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */; };
 		BB290DAB1D7E660F00B05777 /* GKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DAA1D7E660F00B05777 /* GKLoadingView.m */; };
+		BB290DAE1D7EEF4800B05777 /* GKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DAD1D7EEF4800B05777 /* GKSearchViewController.m */; };
+		BB290DB41D7FB0EF00B05777 /* GKSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DB31D7FB0EF00B05777 /* GKSearchResultViewController.m */; };
+		BB290DB71D8000C200B05777 /* GKSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DB61D8000C200B05777 /* GKSearchViewModel.m */; };
+		BB82E1311D85939700784FCB /* GKPullRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = BB82E1301D85939700784FCB /* GKPullRefresher.m */; };
+		BB82E1341D8A9C8900784FCB /* GKTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB82E1331D8A9C8900784FCB /* GKTableViewController.m */; };
 		BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */; };
 		BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B651D4399E90099979F /* GKRealStuffCell.m */; };
 		BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B691D43A0290099979F /* UIColor+GKColors.m */; };
@@ -23,6 +28,7 @@
 		BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */; };
 		BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */; };
 		BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA175371D5F186200FEB852 /* GKHistoryViewController.m */; };
+		BBE8D5F21D961CFE00224EDD /* GKViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE8D5F11D961CFE00224EDD /* GKViewModel.m */; };
 		BBFA9F691D3A9B49009440C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F681D3A9B49009440C6 /* main.m */; };
 		BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F6B1D3A9B49009440C6 /* AppDelegate.m */; };
 		BBFA9F721D3A9B49009440C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBFA9F701D3A9B49009440C6 /* Main.storyboard */; };
@@ -42,6 +48,16 @@
 		BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKFeatureViewModel.m; sourceTree = "<group>"; };
 		BB290DA91D7E660F00B05777 /* GKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLoadingView.h; sourceTree = "<group>"; };
 		BB290DAA1D7E660F00B05777 /* GKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLoadingView.m; sourceTree = "<group>"; };
+		BB290DAC1D7EEF4800B05777 /* GKSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSearchViewController.h; sourceTree = "<group>"; };
+		BB290DAD1D7EEF4800B05777 /* GKSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSearchViewController.m; sourceTree = "<group>"; };
+		BB290DB21D7FB0EF00B05777 /* GKSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSearchResultViewController.h; sourceTree = "<group>"; };
+		BB290DB31D7FB0EF00B05777 /* GKSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSearchResultViewController.m; sourceTree = "<group>"; };
+		BB290DB51D8000C200B05777 /* GKSearchViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSearchViewModel.h; sourceTree = "<group>"; };
+		BB290DB61D8000C200B05777 /* GKSearchViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSearchViewModel.m; sourceTree = "<group>"; };
+		BB82E12F1D85939700784FCB /* GKPullRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPullRefresher.h; sourceTree = "<group>"; };
+		BB82E1301D85939700784FCB /* GKPullRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPullRefresher.m; sourceTree = "<group>"; };
+		BB82E1321D8A9C8900784FCB /* GKTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKTableViewController.h; sourceTree = "<group>"; };
+		BB82E1331D8A9C8900784FCB /* GKTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKTableViewController.m; sourceTree = "<group>"; };
 		BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffViewController.h; sourceTree = "<group>"; };
 		BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffViewController.m; sourceTree = "<group>"; };
 		BB9E6B641D4399E90099979F /* GKRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffCell.h; sourceTree = "<group>"; };
@@ -64,6 +80,8 @@
 		BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPullHeaderView.m; sourceTree = "<group>"; };
 		BBA175361D5F186200FEB852 /* GKHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKHistoryViewController.h; sourceTree = "<group>"; };
 		BBA175371D5F186200FEB852 /* GKHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKHistoryViewController.m; sourceTree = "<group>"; };
+		BBE8D5F01D961CFE00224EDD /* GKViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKViewModel.h; sourceTree = "<group>"; };
+		BBE8D5F11D961CFE00224EDD /* GKViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKViewModel.m; sourceTree = "<group>"; };
 		BBFA9F641D3A9B49009440C6 /* GankIO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GankIO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBFA9F681D3A9B49009440C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBFA9F6A1D3A9B49009440C6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -122,12 +140,18 @@
 		BB9E6B5C1D4396D80099979F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BB82E1321D8A9C8900784FCB /* GKTableViewController.h */,
+				BB82E1331D8A9C8900784FCB /* GKTableViewController.m */,
 				BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */,
 				BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */,
 				BBA175361D5F186200FEB852 /* GKHistoryViewController.h */,
 				BBA175371D5F186200FEB852 /* GKHistoryViewController.m */,
 				BB290DA31D7D9F9600B05777 /* GKFeatureViewController.h */,
 				BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */,
+				BB290DAC1D7EEF4800B05777 /* GKSearchViewController.h */,
+				BB290DAD1D7EEF4800B05777 /* GKSearchViewController.m */,
+				BB290DB21D7FB0EF00B05777 /* GKSearchResultViewController.h */,
+				BB290DB31D7FB0EF00B05777 /* GKSearchResultViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -141,6 +165,8 @@
 				BBA175341D5DE8A900FEB852 /* GKPullHeaderView.m */,
 				BB290DA91D7E660F00B05777 /* GKLoadingView.h */,
 				BB290DAA1D7E660F00B05777 /* GKLoadingView.m */,
+				BB82E12F1D85939700784FCB /* GKPullRefresher.h */,
+				BB82E1301D85939700784FCB /* GKPullRefresher.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -177,6 +203,10 @@
 				BB9E6B781D44B6580099979F /* GKRealStuffViewModel.m */,
 				BB290DA61D7DB0E400B05777 /* GKFeatureViewModel.h */,
 				BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */,
+				BB290DB51D8000C200B05777 /* GKSearchViewModel.h */,
+				BB290DB61D8000C200B05777 /* GKSearchViewModel.m */,
+				BBE8D5F01D961CFE00224EDD /* GKViewModel.h */,
+				BBE8D5F11D961CFE00224EDD /* GKViewModel.m */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -364,20 +394,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9E6B721D445EE10099979F /* RealStuff.m in Sources */,
+				BBE8D5F21D961CFE00224EDD /* GKViewModel.m in Sources */,
 				BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */,
+				BB290DAE1D7EEF4800B05777 /* GKSearchViewController.m in Sources */,
+				BB290DB41D7FB0EF00B05777 /* GKSearchResultViewController.m in Sources */,
 				BB9E6B8C1D44FD910099979F /* RACSignal+MTL.m in Sources */,
 				BBFA9F8D1D3B146F009440C6 /* GKAppConstants.m in Sources */,
 				BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */,
 				BB9E6B6A1D43A0290099979F /* UIColor+GKColors.m in Sources */,
 				BB9E6B6E1D43A8E60099979F /* GKHttpClient.m in Sources */,
 				BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */,
+				BB290DB71D8000C200B05777 /* GKSearchViewModel.m in Sources */,
 				BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */,
 				BB290DAB1D7E660F00B05777 /* GKLoadingView.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
 				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,
 				BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */,
+				BB82E1311D85939700784FCB /* GKPullRefresher.m in Sources */,
 				BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */,
+				BB82E1341D8A9C8900784FCB /* GKTableViewController.m in Sources */,
 				BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */,
 				BBA175351D5DE8A900FEB852 /* GKPullHeaderView.m in Sources */,
 				BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */,

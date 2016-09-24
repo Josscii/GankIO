@@ -10,3 +10,4 @@
 
 NSString *const GKBaseApiURL = @"http://gank.io/api/";
 NSString *const GKHistoryURL = @"day/history";
+NSString *const GKSearchURL = @"search/query/";

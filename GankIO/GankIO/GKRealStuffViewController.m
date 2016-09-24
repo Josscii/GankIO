@@ -16,6 +16,7 @@
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKDBManager.h"
 #import "GKLoadingView.h"
+#import "GKPullRefresher.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
@@ -26,8 +27,10 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *preBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBarButtonItem;
 
-@property (nonatomic, strong) GKPullHeaderView *pullHeader;
+//@property (nonatomic, strong) GKPullHeaderView *pullHeader;
 @property (nonatomic, strong) GKLoadingView *loadingView;
+
+@property (nonatomic, strong) GKPullRefresher *pullHeader;
 
 @end
 
@@ -55,6 +58,7 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
             [self.loadingView startLoading];
         } else {
             [self.loadingView stopLoading];
+            [self.pullHeader stopLoading];
         }
     }];
     
@@ -106,24 +110,14 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 - (void)configureLayout {
     self.tableView.estimatedRowHeight = 68;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    self.pullHeader = [[GKPullHeaderView alloc] init];
-    [self.tableView insertSubview:self.pullHeader atIndex:0];
-    [self.pullHeader setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [[NSLayoutConstraint constraintWithItem:self.pullHeader
-                                  attribute:NSLayoutAttributeBottom
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.tableView
-                                  attribute:NSLayoutAttributeTop
-                                 multiplier:1
-                                   constant:0] setActive:YES];
-    
-    self.pullHeader.belowThresholdText = GKPullToLoadPre;
-    self.pullHeader.overThresholdText = GKLoosenToLoadPre;
-    
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     
+    // pull header
+    self.pullHeader = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeFooter addRefreshBlock:^{
+        [self.viewModel loadRandomRealStuff];
+    }];
+    
+    // loading view
     self.loadingView = [[GKLoadingView alloc] init];
     [self.loadingView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
@@ -137,17 +131,12 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 #pragma mark - scrollview delegate
 
-// would it be great if replace these with rac_signalForSelector ?
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.pullHeader.overThreshold = scrollView.contentOffset.y < -120;
-    self.pullHeader.viewHeightConstraint.constant = MAX(-(scrollView.contentOffset.y + 64), 0);
+    [self.pullHeader scrollViewDidScroll:scrollView];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView.contentOffset.y <= -120) {
-        [self.viewModel loadRandomRealStuff];
-    }
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    [self.pullHeader scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
 }
 
 #pragma mark - tableview delegate and datasource

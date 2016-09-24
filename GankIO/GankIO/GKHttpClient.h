@@ -16,5 +16,9 @@
 
 - (RACSignal *)getHistory;
 - (RACSignal *)getGankRealStuffForOneDay:(NSString *)dayString;
+- (RACSignal *)searchRealStuffsWithKeyword:(NSString *)key
+                                inCategory:(NSString *)category
+                                     count:(NSInteger)count
+                                   perPage:(NSInteger)page;
 
 @end

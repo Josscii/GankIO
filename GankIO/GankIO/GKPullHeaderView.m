@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIImageView *arrowImageView;
 @property (nonatomic, strong) UILabel *label;
 
+@property (nonatomic, assign) CGFloat maxHieght;
+
 @end
 
 @implementation GKPullHeaderView
@@ -23,6 +25,7 @@
     self = [super initWithFrame:CGRectZero];
     
     if (self) {
+        self.hold = YES;
         [self configureLayout];
     }
     
