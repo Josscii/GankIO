@@ -38,3 +38,5 @@ extern NSString *const GKLoosenToLoadMore;
 extern NSString *const GKDidPickAHistoryDayNotification;
 extern NSString *const GKDidUnMarkRealStuffNotification;
 extern NSString *const GKDidSelectRealStuffNotification;
+
+extern NSString *const GKShouldReloadTableNotification;

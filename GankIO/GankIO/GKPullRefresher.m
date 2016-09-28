@@ -18,7 +18,6 @@
 @property (nonatomic, assign) CGFloat pullDistance;
 @property (nonatomic, assign) GKPullRefresherType refreshType;
 @property (nonatomic, assign) GKPullRefresherState refreshState;
-@property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, copy) RefreshBlock refreshBlock;
 
 @end

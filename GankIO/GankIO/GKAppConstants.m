@@ -17,3 +17,5 @@ NSString *const GKLoosenToLoadMore = @"松开开始更多";
 NSString *const GKDidPickAHistoryDayNotification = @"GKDidPickAHistoryDayNotification";
 NSString *const GKDidUnMarkRealStuffNotification = @"GKDidUnMarkRealStuffNotification";
 NSString *const GKDidSelectRealStuffNotification = @"GKDidSelectRealStuffNotification";
+
+NSString *const GKShouldReloadTableNotification = @"GKShouldReloadTableNotification";

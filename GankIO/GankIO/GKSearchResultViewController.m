@@ -11,7 +11,6 @@
 #import "GKRealStuffCell.h"
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKAppConstants.h"
-#import "GKPullHeaderView.h"
 #import "GKPullRefresher.h"
 
 #define MAX_PULL_HEIGHT 60.0f
@@ -20,6 +19,7 @@
 
 @property (nonatomic, strong) GKSearchViewModel *viewModel;
 @property (nonatomic, strong) GKPullRefresher *pullFooter;
+@property (nonatomic, strong) GKPullRefresher *pullHeader;
 
 @end
 
@@ -50,11 +50,18 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     
+    
+    self.pullHeader = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeHeader addRefreshBlock:^{
+        self.viewModel.currentPage += 1;
+        [self.viewModel.searchRealStuffsCommand execute:nil];
+    }];
+    
     // pull footer
     self.pullFooter = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeFooter addRefreshBlock:^{
         self.viewModel.currentPage += 1;
         [self.viewModel.searchRealStuffsCommand execute:nil];
     }];
+    
 }
 
 #pragma mark - scoll view

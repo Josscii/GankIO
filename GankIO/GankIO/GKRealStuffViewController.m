@@ -10,27 +10,22 @@
 #import "GKRealStuffCell.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "GKRealStuffViewModel.h"
-#import "GKPullHeaderView.h"
 #import "GKAppConstants.h"
 #import "GKHistoryViewController.h"
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKDBManager.h"
-#import "GKLoadingView.h"
-#import "GKPullRefresher.h"
+#import "GKRealStuffsContainerCell.h"
 
-static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
+static NSString * const cellReuseIndentifier = @"GKRealStuffsContainerCell";
 
-@interface GKRealStuffViewController () <UITableViewDelegate, UITableViewDataSource>
+typedef void(^Block)(void);
+
+@interface GKRealStuffViewController () <UITableViewDelegate, UITableViewDataSource, GKRealStuffProtocol>
 
 @property (nonatomic, strong) GKRealStuffViewModel *viewModel;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *preBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBarButtonItem;
-
-//@property (nonatomic, strong) GKPullHeaderView *pullHeader;
-@property (nonatomic, strong) GKLoadingView *loadingView;
-
-@property (nonatomic, strong) GKPullRefresher *pullHeader;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) Block moveCellBlock;
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 
@@ -42,59 +37,53 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     
     [self configureLayout];
     
+    self.currentIndex = 0;
+    
     self.viewModel = [[GKRealStuffViewModel alloc] init];
     
     RAC(self, navigationItem.title) = RACObserve(self.viewModel, title);
     
     @weakify(self)
-    [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
+    [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(NSArray *x) {
         @strongify(self)
-        [self.tableView reloadData];
+        self.moveCellBlock();
+        self.moveCellBlock = ^{
+            @strongify(self)
+            [self.tableView reloadData];
+        };;
     }];
     
     [self.viewModel.requestRealStuffCommand.executing subscribeNext:^(NSNumber *x) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = x.boolValue;
-        if (x.boolValue) {
-            [self.loadingView startLoading];
-        } else {
-            [self.loadingView stopLoading];
-            [self.pullHeader stopLoading];
-        }
     }];
     
-    self.preBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+    self.moveCellBlock = ^{
         @strongify(self)
-        [self.viewModel loadPreRealStuff];
-        return [RACSignal empty];
-    }];
+        [self.tableView reloadData];
+    };
     
-    self.nextBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        @strongify(self)
-        [self.viewModel loadNextRealStuff];
-        return [RACSignal empty];
-    }];
-    
+    // 选择历史
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidPickAHistoryDayNotification object:nil]
       takeUntil:[self rac_willDeallocSignal]]
      subscribeNext:^(NSNotification *notifi) {
          @strongify(self)
          NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
+         self.currentIndex = 0;
+         self.viewModel.loadState = GKLoadStateRandom;
          [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
     }];
     
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidUnMarkRealStuffNotification object:nil]
+    // notification
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidSelectRealStuffNotification object:nil]
       takeUntil:[self rac_willDeallocSignal]]
      subscribeNext:^(NSNotification *notifi) {
          @strongify(self)
-         RealStuff *rs = notifi.userInfo[@"realstuff"];
-         [self.viewModel.realStuffs enumerateObjectsUsingBlock:^(RealStuff * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-             if ([rs.desc isEqualToString:obj.desc]) {
-                 obj.isFavorite = 0;
-                 [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                 *stop = YES;
-             }
-         }];
-    }];
+         NSString *url = notifi.userInfo[@"url"];
+         KINWebBrowserViewController *webBrowser = [KINWebBrowserViewController webBrowser];
+         webBrowser.hidesBottomBarWhenPushed = YES;
+         [self.navigationController pushViewController:webBrowser animated:YES];
+         [webBrowser loadURLString:url];
+     }];
     
     [self.viewModel loadHistory];
 }
@@ -108,35 +97,42 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 }
 
 - (void)configureLayout {
-    self.tableView.estimatedRowHeight = 68;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    // pull header
-    self.pullHeader = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeFooter addRefreshBlock:^{
-        [self.viewModel loadRandomRealStuff];
-    }];
-    
-    // loading view
-    self.loadingView = [[GKLoadingView alloc] init];
-    [self.loadingView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [self.view addSubview:self.loadingView];
-    
-    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:self.loadingView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0].active = YES;
+    // tableview
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.rowHeight = self.view.bounds.size.height;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[GKRealStuffsContainerCell class] forCellReuseIdentifier:cellReuseIndentifier];
+    [self.view addSubview:self.tableView];
 }
 
-#pragma mark - scrollview delegate
+#pragma mark - protocol
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.pullHeader scrollViewDidScroll:scrollView];
+- (void)loadNext {
+    [self.viewModel loadNextRealStuff];
+    @weakify(self)
+    self.moveCellBlock = ^{
+        @strongify(self)
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:++self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    };
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    [self.pullHeader scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+- (void)loadPre {
+    [self.viewModel loadPreRealStuff];
+    @weakify(self)
+    self.moveCellBlock = ^{
+        @strongify(self)
+        if (self.currentIndex == 0) {
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+        } else {
+            [self.tableView reloadData];
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:--self.currentIndex inSection:0]  atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        }
+    };
 }
 
 #pragma mark - tableview delegate and datasource
@@ -146,46 +142,15 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    GKRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
-    
-    [cell configreCellWithRealStuff:self.viewModel.realStuffs[indexPath.row]];
-    
+    GKRealStuffsContainerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
+    cell.delegate = self;
+    cell.realStuffs = self.viewModel.realStuffs[indexPath.row];
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:true];
-    
-    RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
-    
-    KINWebBrowserViewController *webBrowser = [KINWebBrowserViewController webBrowser];
-    webBrowser.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:webBrowser animated:YES];
-    [webBrowser loadURLString:realStuff.url];
-}
-
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RealStuff *realStuff = self.viewModel.realStuffs[indexPath.row];
-    NSString *title = !realStuff.isFavorite ? @"收藏" : @"取消收藏";
-    
-    UITableViewRowAction *saveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:title handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[[GKDBManager defaultManager] markRealStuff:realStuff AsFavorite:!realStuff.isFavorite] subscribeNext:^(id x) {
-            realStuff.isFavorite = !realStuff.isFavorite;
-            tableView.editing = NO;
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-    }];
-    
-    saveAction.backgroundColor = [UIColor brownColor];
-    
-    return @[saveAction];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // iOS 8
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    GKRealStuffsContainerCell *rfcell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
+    [rfcell.pullHeader stopLoading];
+    [rfcell.pullFooter stopLoading];
 }
 @end

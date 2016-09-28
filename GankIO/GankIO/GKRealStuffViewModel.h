@@ -10,12 +10,19 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RealStuff.h"
 
+typedef NS_ENUM(NSInteger, GKLoadState) {
+    GKLoadStateNext,
+    GKLoadStatePre,
+    GKLoadStateRandom
+};
+
 @interface GKRealStuffViewModel : NSObject
 
 @property (nonatomic, copy) NSArray *realStuffs;
 @property (nonatomic, copy) NSArray *history;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, assign) GKLoadState loadState;
 
 @property (nonatomic, strong) RACCommand *requestRealStuffCommand;
 @property (nonatomic, strong) RACCommand *requestHistoryCommand;

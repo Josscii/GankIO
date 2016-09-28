@@ -30,6 +30,7 @@
 
 - (void)initialize {
     self.currentIndex = -1;
+    self.loadState = GKLoadStateNext;
     
     // history
     @weakify(self)
@@ -48,7 +49,7 @@
         return signal;
     }];
     
-    RAC(self, history) = [self.requestHistoryCommand.executionSignals switchToLatest];
+    RAC(self, history) = self.requestHistoryCommand.executionSignals.switchToLatest;
     
     // realstuff
     
@@ -68,11 +69,35 @@
         return signal;
     }];
     
-    RAC(self, realStuffs) = [self.requestRealStuffCommand.executionSignals switchToLatest];
+    RAC(self, realStuffs) = [self.requestRealStuffCommand.executionSignals.switchToLatest scanWithStart:@[] reduce:^id(NSArray *running, NSArray *next) {
+        NSArray *result = nil;
+        switch (self.loadState) {
+            case GKLoadStateNext:
+                if ([running containsObject:next]) {
+                    result = running;
+                } else {
+                    result = [running arrayByAddingObject:next];
+                }
+                break;
+            case GKLoadStatePre:
+                if ([running containsObject:next]) {
+                    result = running;
+                } else {
+                    result = [@[next] arrayByAddingObjectsFromArray:running];
+                }
+                break;
+            case GKLoadStateRandom:
+                result = @[next];
+            default:
+                break;
+        }
+        return result;
+    }];
     
     // subscribe subject won't call signal block again, just add a subscriber to its list
-    [[self.requestHistoryCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
-        [self.requestRealStuffCommand execute:self.history[++self.currentIndex]];
+    [self.requestHistoryCommand.executionSignals.switchToLatest subscribeNext:^(id x) {
+//        [self.requestRealStuffCommand execute:self.history[++self.currentIndex]];
+        [self loadNextRealStuff];
     }];
     
     RAC(self, title) = [RACObserve(self, currentIndex) map:^id(NSNumber *index) {
@@ -91,6 +116,7 @@
 - (void)loadNextRealStuff {
     NSInteger index = self.currentIndex;
     if (++index < self.history.count) {
+        self.loadState = GKLoadStateNext;
         [self loadRealStuffAtOneDay:index];
     } else {
         NSLog(@"已经到最后一页了");
@@ -100,14 +126,16 @@
 - (void)loadPreRealStuff {
     NSInteger index = self.currentIndex;
     if (--index >= 0) {
+        self.loadState = GKLoadStatePre;
         [self loadRealStuffAtOneDay:index];
     } else {
-        NSLog(@"已经到第一页了");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GKHasReachedTheTop" object:nil];
     }
 }
 
 - (void)loadRandomRealStuff {
     NSInteger index = arc4random_uniform(self.history.count - 1);
+    self.loadState = GKLoadStateRandom;
     [self loadRealStuffAtOneDay:index];
 }
 
@@ -116,10 +144,10 @@
     [self.requestRealStuffCommand execute:nil];
 }
 
-// signals
+// signals 需要 retry，在 2G 下很容易失败
 
 - (RACSignal *)requestRealStuffSignal {
-    return [[[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:self.history[self.currentIndex]] map:^id(NSDictionary *json) {
+    return [[[[[[GKHttpClient sharedClient] getGankRealStuffForOneDay:self.history[self.currentIndex]] map:^id(NSDictionary *json) {
         NSArray *categories = json[@"category"];
         NSDictionary *result = json[@"results"];
         return [[categories.rac_sequence map:^id(NSString *cate) {
@@ -127,7 +155,7 @@
         }] foldLeftWithStart:@[] reduce:^id(NSArray *accumulator, id value) {
             return [accumulator arrayByAddingObjectsFromArray:value];
         }];
-    }] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] doNext:^(id x) {
+    }] retry:3] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] doNext:^(id x) {
         [[[GKDBManager defaultManager] saveRealStuffs:x ofDay:self.history[self.currentIndex]] subscribeNext:^(id x) {
             NSLog(@"saved realstuffs successfully of %@", self.history[self.currentIndex]);
         }];
@@ -135,12 +163,12 @@
 }
 
 - (RACSignal *)requestHistorySignal {
-    return [[[[GKHttpClient sharedClient] getHistory] map:^id(id value) {
+    return [[[[[GKHttpClient sharedClient] getHistory] map:^id(id value) {
         NSArray *results = value[@"results"];
         return [[results.rac_sequence map:^id(NSString *dayString) {
             return [dayString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
         }] array];
-    }] doNext:^(NSArray *history) {
+    }] retry:3] doNext:^(NSArray *history) {
         [history enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [[[GKDBManager defaultManager] saveHistory:obj] subscribeNext:^(id x) {
                 NSLog(@"saved history successfully of %@", x);
