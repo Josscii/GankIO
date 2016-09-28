@@ -13,7 +13,7 @@ A demonstration app with FRP and MVVM using http://gank.io/api.
 
 - [x] 搜索
 
-- [ ] 摇一摇随机一篇
+- [x] 摇一摇随机一篇
 
 - [x] 上拉下一篇，下拉上一篇
 

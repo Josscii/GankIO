@@ -32,7 +32,7 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 
 - (void)setupView {
     // tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-1) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"GKRealStuffCell" bundle:nil] forCellReuseIdentifier:@"GKRealStuffCell"];
@@ -50,10 +50,6 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     self.pullFooter = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeFooter addRefreshBlock:^{
         [self.delegate loadNext];
     }];
-    
-    // loading view
-    self.loadingView = [[GKLoadingView alloc] initWithFrame:CGRectZero];
-    [self.contentView addSubview:self.loadingView];
     
     // mark realstuff
     @weakify(self)
@@ -76,16 +72,22 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
      subscribeNext:^(NSNotification *notifi) {
          @strongify(self)
          [self.pullHeader stopLoading];
+         [UIView animateWithDuration:0.5f animations:^{
+             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
+         }];
+     }];
+    
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"GKHasReachedTheBottom" object:nil]
+      takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(NSNotification *notifi) {
+         @strongify(self)
+         [self.pullFooter stopLoading];
      }];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    self.tableView.frame = self.contentView.bounds;
-    self.tableView.contentOffset = CGPointMake(0, -64);
-    
-    self.loadingView.frame = self.contentView.bounds;
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
 #pragma mark - tableview delegate

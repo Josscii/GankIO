@@ -15,6 +15,7 @@
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKDBManager.h"
 #import "GKRealStuffsContainerCell.h"
+#import "GKLoadingView.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffsContainerCell";
 
@@ -27,6 +28,8 @@ typedef void(^Block)(void);
 @property (nonatomic, strong) Block moveCellBlock;
 @property (nonatomic, assign) NSInteger currentIndex;
 
+@property (nonatomic, strong) GKLoadingView *loadingView;
+
 @end
 
 @implementation GKRealStuffViewController
@@ -38,7 +41,6 @@ typedef void(^Block)(void);
     [self configureLayout];
     
     self.currentIndex = 0;
-    
     self.viewModel = [[GKRealStuffViewModel alloc] init];
     
     RAC(self, navigationItem.title) = RACObserve(self.viewModel, title);
@@ -46,6 +48,7 @@ typedef void(^Block)(void);
     @weakify(self)
     [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(NSArray *x) {
         @strongify(self)
+        [self.loadingView stopLoading];
         self.moveCellBlock();
         self.moveCellBlock = ^{
             @strongify(self)
@@ -69,6 +72,7 @@ typedef void(^Block)(void);
          @strongify(self)
          NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
          self.currentIndex = 0;
+         [self.loadingView startLoading];
          self.viewModel.loadState = GKLoadStateRandom;
          [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
     }];
@@ -102,11 +106,24 @@ typedef void(^Block)(void);
     
     // tableview
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.rowHeight = self.view.bounds.size.height;
+    self.tableView.rowHeight = SCREEN_HEIGHT;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[GKRealStuffsContainerCell class] forCellReuseIdentifier:cellReuseIndentifier];
+    self.tableView.bounces = NO;
     [self.view addSubview:self.tableView];
+    
+    // loading view
+    self.loadingView = [[GKLoadingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [self.view addSubview:self.loadingView];
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        self.currentIndex = 0;
+        [self.loadingView startLoading];
+        [self.viewModel loadRandomRealStuff];
+    }
 }
 
 #pragma mark - protocol

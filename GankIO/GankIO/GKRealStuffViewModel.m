@@ -119,7 +119,7 @@
         self.loadState = GKLoadStateNext;
         [self loadRealStuffAtOneDay:index];
     } else {
-        NSLog(@"已经到最后一页了");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GKHasReachedTheBottom" object:nil];
     }
 }
 
@@ -134,7 +134,7 @@
 }
 
 - (void)loadRandomRealStuff {
-    NSInteger index = arc4random_uniform(self.history.count - 1);
+    NSInteger index = arc4random_uniform(self.history.count - 1.f);
     self.loadState = GKLoadStateRandom;
     [self loadRealStuffAtOneDay:index];
 }

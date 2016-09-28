@@ -25,7 +25,6 @@
 
 @property (nonatomic, strong) GKPullRefresher *pullHeader;
 @property (nonatomic, strong) GKPullRefresher *pullFooter;
-@property (nonatomic, strong) GKLoadingView *loadingView;
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
