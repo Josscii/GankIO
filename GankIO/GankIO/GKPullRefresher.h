@@ -24,8 +24,6 @@ typedef NS_ENUM(NSInteger, GKPullRefresherType) {
 
 @interface GKPullRefresher : UIView
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView
                               type:(GKPullRefresherType)type
                    addRefreshBlock:(RefreshBlock)refreshBlock;

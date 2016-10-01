@@ -11,11 +11,11 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "GKRealStuffViewModel.h"
 #import "GKAppConstants.h"
-#import "GKHistoryViewController.h"
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "GKDBManager.h"
 #import "GKRealStuffsContainerCell.h"
 #import "GKLoadingView.h"
+#import "GKDatePicker.h"
 
 static NSString * const cellReuseIndentifier = @"GKRealStuffsContainerCell";
 
@@ -65,18 +65,6 @@ typedef void(^Block)(void);
         [self.tableView reloadData];
     };
     
-    // 选择历史
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidPickAHistoryDayNotification object:nil]
-      takeUntil:[self rac_willDeallocSignal]]
-     subscribeNext:^(NSNotification *notifi) {
-         @strongify(self)
-         NSNumber *pickedIndex = notifi.userInfo[@"pickedIndex"];
-         self.currentIndex = 0;
-         [self.loadingView startLoading];
-         self.viewModel.loadState = GKLoadStateRandom;
-         [self.viewModel loadRealStuffAtOneDay:pickedIndex.integerValue];
-    }];
-    
     // notification
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidSelectRealStuffNotification object:nil]
       takeUntil:[self rac_willDeallocSignal]]
@@ -92,12 +80,19 @@ typedef void(^Block)(void);
     [self.viewModel loadHistory];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"history"]) {
-        UINavigationController *historyNav = (UINavigationController *)segue.destinationViewController;
-        GKHistoryViewController *historyVC = (GKHistoryViewController *)historyNav.topViewController;
-        historyVC.history = self.viewModel.history;
-    }
+- (IBAction)test:(id)sender {
+    GKDatePicker *picker = [[GKDatePicker alloc] initWithSelectBlock:^(NSString *selectedHistory) {
+        // did select
+        NSInteger pickedIndex = [self.viewModel.history indexOfObject:selectedHistory];
+        self.currentIndex = 0;
+        [self.loadingView startLoading];
+        self.viewModel.loadState = GKLoadStateRandom;
+        [self.viewModel loadRealStuffAtOneDay:pickedIndex];
+    }];
+    
+    picker.historys = self.viewModel.history;
+    [self.view addSubview:picker];
+    [picker showAnimation];
 }
 
 - (void)configureLayout {

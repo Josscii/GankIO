@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41F1362D5192844C9547CC35 /* Pods_GankIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E017348744605F04BFD219E9 /* Pods_GankIO.framework */; };
+		BB2071221D9D5D5200C37E9B /* GKDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2071211D9D5D5200C37E9B /* GKDatePicker.m */; };
 		BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290D9D1D7ABF3600B05777 /* GKDBManager.m */; };
 		BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */; };
 		BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */; };
@@ -28,7 +29,6 @@
 		BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B851D44F6380099979F /* AFHTTPSessionManager+RAC.m */; };
 		BB9E6B8C1D44FD910099979F /* RACSignal+MTL.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B8B1D44FD910099979F /* RACSignal+MTL.m */; };
 		BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */; };
-		BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA175371D5F186200FEB852 /* GKHistoryViewController.m */; };
 		BBE8D5F21D961CFE00224EDD /* GKViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE8D5F11D961CFE00224EDD /* GKViewModel.m */; };
 		BBFA9F691D3A9B49009440C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F681D3A9B49009440C6 /* main.m */; };
 		BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA9F6B1D3A9B49009440C6 /* AppDelegate.m */; };
@@ -40,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB2071201D9D5D5200C37E9B /* GKDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDatePicker.h; sourceTree = "<group>"; };
+		BB2071211D9D5D5200C37E9B /* GKDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDatePicker.m; sourceTree = "<group>"; };
 		BB290D9C1D7ABF3600B05777 /* GKDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDBManager.h; sourceTree = "<group>"; };
 		BB290D9D1D7ABF3600B05777 /* GKDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDBManager.m; sourceTree = "<group>"; };
 		BB290DA21D7D445A00B05777 /* GKProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKProtocols.h; sourceTree = "<group>"; };
@@ -80,8 +82,6 @@
 		BB9E6B8B1D44FD910099979F /* RACSignal+MTL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACSignal+MTL.m"; sourceTree = "<group>"; };
 		BB9E6B8D1D4503EB0099979F /* MTLModel+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MTLModel+JSON.h"; sourceTree = "<group>"; };
 		BB9E6B8E1D4503EB0099979F /* MTLModel+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MTLModel+JSON.m"; sourceTree = "<group>"; };
-		BBA175361D5F186200FEB852 /* GKHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKHistoryViewController.h; sourceTree = "<group>"; };
-		BBA175371D5F186200FEB852 /* GKHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKHistoryViewController.m; sourceTree = "<group>"; };
 		BBE8D5F01D961CFE00224EDD /* GKViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKViewModel.h; sourceTree = "<group>"; };
 		BBE8D5F11D961CFE00224EDD /* GKViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKViewModel.m; sourceTree = "<group>"; };
 		BBFA9F641D3A9B49009440C6 /* GankIO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GankIO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +144,6 @@
 			children = (
 				BB9E6B611D43997D0099979F /* GKRealStuffViewController.h */,
 				BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */,
-				BBA175361D5F186200FEB852 /* GKHistoryViewController.h */,
-				BBA175371D5F186200FEB852 /* GKHistoryViewController.m */,
 				BB290DA31D7D9F9600B05777 /* GKFeatureViewController.h */,
 				BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */,
 				BB290DAC1D7EEF4800B05777 /* GKSearchViewController.h */,
@@ -170,6 +168,8 @@
 				BB290DAA1D7E660F00B05777 /* GKLoadingView.m */,
 				BB82E12F1D85939700784FCB /* GKPullRefresher.h */,
 				BB82E1301D85939700784FCB /* GKPullRefresher.m */,
+				BB2071201D9D5D5200C37E9B /* GKDatePicker.h */,
+				BB2071211D9D5D5200C37E9B /* GKDatePicker.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -398,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9E6B721D445EE10099979F /* RealStuff.m in Sources */,
+				BB2071221D9D5D5200C37E9B /* GKDatePicker.m in Sources */,
 				BBE8D5F21D961CFE00224EDD /* GKViewModel.m in Sources */,
 				BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */,
 				BB290DAE1D7EEF4800B05777 /* GKSearchViewController.m in Sources */,
@@ -414,7 +415,6 @@
 				BB81F7A61D98F93300DFD9CA /* GKRealStuffsContainerCell.m in Sources */,
 				BB74BF1D1D98A132009650D7 /* GKPullHeaderView.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
-				BBA175381D5F186200FEB852 /* GKHistoryViewController.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,
 				BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */,
 				BB82E1311D85939700784FCB /* GKPullRefresher.m in Sources */,

@@ -14,6 +14,7 @@
 
 @interface GKPullRefresher ()
 
+@property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, assign) CGFloat pullDistance;
 @property (nonatomic, assign) GKPullRefresherType refreshType;
