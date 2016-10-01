@@ -5,6 +5,8 @@ A demonstration app with FRP and MVVM using http://gank.io/api.
 
 国庆开始才把之前的任务弄完，并且现在还有 bug，不过也算是一个里程碑吧。接下再完善完善，研究一下 API，看看能不能做点更好玩的东西。
 
+![preview](https://github.com/Josscii/GankIO/blob/master/preview.gif)
+
 ## 9.5
 
 今天下定决心把这个项目继续做下去，争取做得比较完善，接下来的计划是：
