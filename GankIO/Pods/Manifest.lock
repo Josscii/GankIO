@@ -24,6 +24,7 @@ PODS:
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
+  - Masonry (1.0.1)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -31,6 +32,9 @@ PODS:
   - ReactiveCocoa/no-arc (2.5)
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
@@ -38,7 +42,9 @@ DEPENDENCIES:
   - FMDB (~> 2.6.2)
   - KINWebBrowser
   - Mantle (~> 2.0.7)
+  - Masonry
   - ReactiveCocoa (~> 2.5)
+  - SDWebImage (~> 3.8.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -46,9 +52,11 @@ SPEC CHECKSUMS:
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   KINWebBrowser: 27aa857a2aa39063ed102cca781d130b679d205f
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 5f934ef127fd1c1e189c187b6ca9c15334bafb61
+PODFILE CHECKSUM: 73eb2c57a13e2437f2e3f6873cf5e9cbc5f130d6
 
 COCOAPODS: 1.0.1

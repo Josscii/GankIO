@@ -50,7 +50,8 @@ typedef NS_ENUM(NSUInteger, GKError) {
             NSString *historySQL = @"create table if not exists history(id integer primary key autoincrement, day text, updatetime real)";
             [_database executeUpdate:historySQL];
             
-            NSString *realstuffSQL = @"create table if not exists realstuff(id integer primary key autoincrement, desc text, type text, url text, who text, isFavorite integer, day text, foreign key (day) references history(day))";
+            /// add images
+            NSString *realstuffSQL = @"create table if not exists realstuff(id integer primary key autoincrement, desc text, type text, url text, who text, isFavorite integer, day text, images text, foreign key (day) references history(day))";
             [_database executeUpdate:realstuffSQL];
             
             [_database close];
@@ -132,7 +133,18 @@ typedef NS_ENUM(NSUInteger, GKError) {
         @strongify(self)
         if ([self.database open]) {
             [realStuffs enumerateObjectsUsingBlock:^(RealStuff * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self.database executeUpdate:@"INSERT INTO realstuff (desc, type, url, who, isFavorite, day) VALUES (?, ?, ?, ?, ?, ?)", obj.desc, obj.type, obj.url, obj.who, @(obj.isFavorite), day];
+                NSMutableString *imageStrings = [@"" mutableCopy];
+                
+                for (id s in obj.images) {
+                    if ([s isEqual:obj.images.lastObject]) {
+                        [imageStrings appendString:s];
+                    } else {
+                        NSString *ss = [NSString stringWithFormat:@"%@,", s];
+                        [imageStrings appendString:ss];
+                    }
+                }
+                
+                [self.database executeUpdate:@"INSERT INTO realstuff (desc, type, url, who, isFavorite, day, images) VALUES (?, ?, ?, ?, ?, ?, ?)", obj.desc, obj.type, obj.url, obj.who, @(obj.isFavorite), day, [imageStrings copy]];
             }];
             [subscriber sendNext:day];
             [subscriber sendCompleted];

@@ -40,3 +40,6 @@ extern NSString *const GKDidUnMarkRealStuffNotification;
 extern NSString *const GKDidSelectRealStuffNotification;
 
 extern NSString *const GKShouldReloadTableNotification;
+
+extern NSString *const GKHasReachedTheBottomNotification;
+extern NSString *const GKHasReachedTheTopNotification;

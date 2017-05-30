@@ -18,11 +18,13 @@
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *who;
 @property (nonatomic, assign) NSInteger isFavorite;
+@property (nonatomic, copy) NSArray<NSString *> *images;
 
 - (instancetype)initWithDesc:(NSString *)desc
                         type:(NSString *)type
                          url:(NSString *)url
                          who:(NSString *)who
-                  isFavorite:(NSInteger)isFavorite;
+                  isFavorite:(NSInteger)isFavorite
+                      images:(NSArray *)images;
 
 @end

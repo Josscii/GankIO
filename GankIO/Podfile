@@ -8,6 +8,8 @@ pod 'ReactiveCocoa', '~> 2.5'
 pod 'Mantle', '~> 2.0.7'
 pod 'KINWebBrowser'
 pod 'FMDB', '~> 2.6.2'
+pod 'SDWebImage', '~> 3.8.1'
+pod 'Masonry'
 
 end
 

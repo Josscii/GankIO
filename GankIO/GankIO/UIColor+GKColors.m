@@ -42,4 +42,35 @@
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
++ (UIColor *)githubColor {
+    return [UIColor colorFromHexString:@"#333333"];
+}
+
++ (UIColor *)jianshuColor {
+    return [UIColor colorFromHexString:@"#E78170"];
+}
+
++ (UIColor *)zhihuColor {
+    return [UIColor colorFromHexString:@"#0E74DD"];
+}
+
++ (UIColor *)weixinColor {
+    return [UIColor colorFromHexString:@"#A0E759"];
+}
+
++ (UIColor *)commonBlogColor {
+    return [UIColor colorFromHexString:@"#F5A623"];
+}
+
++ (UIColor *)contentSeparatorColor {
+    return [UIColor colorFromHexString:@"#EEEEEE"];
+}
+
++ (UIColor *)titleColor {
+    return [UIColor colorFromHexString:@"#212121"];
+}
+
++ (UIColor *)creatorColor {
+    return [UIColor colorFromHexString:@"#757575"];
+}
 @end

@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *descriptionLabel;
-@property (nonatomic, assign) CGFloat pullDistance;
+//@property (nonatomic, assign) CGFloat pullDistance;
 @property (nonatomic, assign) GKPullRefresherType refreshType;
 @property (nonatomic, assign) GKPullRefresherState refreshState;
 @property (nonatomic, copy) RefreshBlock refreshBlock;
@@ -81,10 +81,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat pullDistance;
     if (self.refreshType == GKPullRefresherTypeHeader) {
-        self.pullDistance = -(scrollView.contentOffset.y + scrollView.contentInset.top);
+        pullDistance = -(scrollView.contentOffset.y + scrollView.contentInset.top);
     } else {
-        self.pullDistance = scrollView.contentOffset.y - (scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height);
+        pullDistance = scrollView.contentOffset.y - (scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height);
         CGRect rect = self.frame;
         rect.origin.y = scrollView.contentSize.height;
         self.frame = rect;
@@ -94,7 +95,7 @@
     }
     
     if (self.refreshState != GKPullRefresherStateLoading) {
-        if (self.pullDistance > MAX_TRIGGERH_HEIGHT) {
+        if (pullDistance > MAX_TRIGGERH_HEIGHT) {
             self.refreshState = GKPullRefresherStateReady;
         } else {
             self.refreshState = GKPullRefresherStateInitial;
@@ -103,25 +104,20 @@
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    
-    if (self.pullDistance > MAX_TRIGGERH_HEIGHT && self.refreshState != GKPullRefresherStateLoading) {
+      if (self.refreshState == GKPullRefresherStateReady) {
         [self startLoading];
         if (self.refreshType == GKPullRefresherTypeHeader) {
-            [UIView animateWithDuration:0.4f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                UIEdgeInsets inset = self.scrollView.contentInset;
-                inset.top += MAX_TRIGGERH_HEIGHT;
-                self.scrollView.contentInset = inset;
-            } completion:nil];
+            UIEdgeInsets inset = self.scrollView.contentInset;
+            inset.top += MAX_TRIGGERH_HEIGHT;
+            self.scrollView.contentInset = inset;
             
-            (*targetContentOffset).y = -scrollView.contentInset.top;
+        // (*targetContentOffset).y = -scrollView.contentInset.top;
         } else {
-            [UIView animateWithDuration:0.4f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                UIEdgeInsets inset = self.scrollView.contentInset;
-                inset.bottom += MAX_TRIGGERH_HEIGHT;
-                self.scrollView.contentInset = inset;
-            } completion:nil];
-            
-            (*targetContentOffset).y = scrollView.contentOffset.y;
+            UIEdgeInsets inset = self.scrollView.contentInset;
+            inset.bottom += MAX_TRIGGERH_HEIGHT;
+            self.scrollView.contentInset = inset;
+
+        // (*targetContentOffset).y = scrollView.contentOffset.y;
         }
     }
 }

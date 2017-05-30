@@ -16,7 +16,8 @@
                         type:(NSString *)type
                          url:(NSString *)url
                          who:(NSString *)who
-                  isFavorite:(NSInteger)isFavorite {
+                  isFavorite:(NSInteger)isFavorite
+                      images:(NSArray *)images {
     self = [super init];
     if (self) {
         _desc = desc;
@@ -24,6 +25,7 @@
         _url = url;
         _who = who;
         _isFavorite = isFavorite;
+        _images = images;
     }
     return self;
 }
@@ -35,8 +37,18 @@
              @"desc": @"desc",
              @"type": @"type",
              @"url": @"url",
-             @"who": @"who"
+             @"who": @"who",
+             @"images": @"images"
              };
+}
+
++ (NSValueTransformer *)whoJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        if (value == nil) {
+            return @"no name";
+        }
+        return value;
+    }];
 }
 
 #pragma mark - GKModelProtocol
@@ -47,7 +59,16 @@
     NSString *url = [s objectForColumnName:@"url"];
     NSString *who = [s objectForColumnName:@"who"];
     NSInteger isFavorite = [s intForColumn:@"isFavorite"];
-    return [[RealStuff alloc] initWithDesc:desc type:type url:url who:who isFavorite:isFavorite];
+    NSString *imagesString = [s objectForColumnName:@"images"];
+    
+    NSArray *images = nil;
+    if ([imagesString isEqualToString:@""]) {
+        images = @[];
+    } else {
+        images = [imagesString componentsSeparatedByString:@","];
+    }
+    
+    return [[RealStuff alloc] initWithDesc:desc type:type url:url who:who isFavorite:isFavorite images:images];
 }
 
 @end

@@ -12,4 +12,13 @@
 
 + (UIColor *)colorWithRealStuffType:(NSString *)type;
 
++ (UIColor *)githubColor;
++ (UIColor *)jianshuColor;
++ (UIColor *)zhihuColor;
++ (UIColor *)weixinColor;
++ (UIColor *)commonBlogColor;
++ (UIColor *)contentSeparatorColor;
++ (UIColor *)titleColor;
++ (UIColor *)creatorColor;
+
 @end

@@ -11,10 +11,11 @@
 #import "KINWebBrowser/KINWebBrowserViewController.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
 #import "GKRealStuffCell.h"
-#import "GKRealStuffViewModel.h"
 #import "GKDBManager.h"
 
-static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
+NSString * const cellReuseIndentifier = @"GKRealStuffCell";
+
+NSString * const newCellReuseIdentifier = @"newCellReuseIdentifier";
 
 @interface GKRealStuffsContainerCell () <UITableViewDataSource, UITableViewDelegate>
 
@@ -40,9 +41,14 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     self.tableView.tableFooterView = [UIView new];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 49, 0);
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     [self.contentView addSubview:self.tableView];
     
-    // pullrefreshers
+    /// -----
+    [self.tableView registerClass:[GKNewGankRealStuffCell class] forCellReuseIdentifier:newCellReuseIdentifier];
+    /// -----
+    
+    // pull refreshers
     self.pullHeader = [[GKPullRefresher alloc] initWithScrollView:self.tableView type:GKPullRefresherTypeHeader addRefreshBlock:^{
         [self.delegate loadPre];
     }];
@@ -67,21 +73,22 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
          }];
      }];
     
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"GKHasReachedTheTop" object:nil]
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKHasReachedTheTopNotification object:nil]
       takeUntil:[self rac_willDeallocSignal]]
      subscribeNext:^(NSNotification *notifi) {
          @strongify(self)
-         [self.pullHeader stopLoading];
-         [UIView animateWithDuration:0.5f animations:^{
-             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
-         }];
+         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self.pullHeader stopLoading];
+         });
      }];
     
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"GKHasReachedTheBottom" object:nil]
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKHasReachedTheBottomNotification object:nil]
       takeUntil:[self rac_willDeallocSignal]]
      subscribeNext:^(NSNotification *notifi) {
          @strongify(self)
-         [self.pullFooter stopLoading];
+         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self.pullFooter stopLoading];
+         });
      }];
 }
 
@@ -97,9 +104,15 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    GKRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
+    //GKRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIndentifier forIndexPath:indexPath];
     
-    [cell configreCellWithRealStuff:self.realStuffs[indexPath.row]];
+    ///-----------
+    GKNewGankRealStuffCell *cell = [tableView dequeueReusableCellWithIdentifier:newCellReuseIdentifier forIndexPath:indexPath];
+    cell.delegate = self;
+    
+    ///-----------
+    
+    [cell configureCellWithRealStuff:self.realStuffs[indexPath.row]];
     
     return cell;
 }
@@ -110,31 +123,6 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
     RealStuff *realStuff = self.realStuffs[indexPath.row];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:GKDidSelectRealStuffNotification object:nil userInfo:@{@"url": realStuff.url}];
-}
-
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RealStuff *realStuff = self.realStuffs[indexPath.row];
-    NSString *title = !realStuff.isFavorite ? @"收藏" : @"取消收藏";
-
-    UITableViewRowAction *saveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:title handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[[GKDBManager defaultManager] markRealStuff:realStuff AsFavorite:!realStuff.isFavorite] subscribeNext:^(id x) {
-            realStuff.isFavorite = !realStuff.isFavorite;
-            tableView.editing = NO;
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-    }];
-
-    saveAction.backgroundColor = [UIColor brownColor];
-
-    return @[saveAction];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // iOS 8
 }
 
 #pragma mark - scrollview delegate
@@ -152,6 +140,21 @@ static NSString * const cellReuseIndentifier = @"GKRealStuffCell";
 - (void)setRealStuffs:(NSArray *)realStuffs {
     _realStuffs = realStuffs;
     [self.tableView reloadData];
+}
+
+#pragma mark - GKNewGankRealStuffCellDelegate
+
+- (void)didSelectImageInCell:(UITableViewCell *)cell withImageView:(GKImageView *)imageView withIndex:(NSInteger)index {
+    [imageView startLoadingWithProgress:0.4];
+}
+
+- (void)didPressFavoriteButton:(UIButton *)button inCell:(UITableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    RealStuff *realStuff = self.realStuffs[indexPath.row];
+    [[[GKDBManager defaultManager] markRealStuff:realStuff AsFavorite:!realStuff.isFavorite] subscribeNext:^(id x) {
+        realStuff.isFavorite = !realStuff.isFavorite;
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }];
 }
 
 @end

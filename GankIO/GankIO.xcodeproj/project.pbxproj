@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		41F1362D5192844C9547CC35 /* Pods_GankIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E017348744605F04BFD219E9 /* Pods_GankIO.framework */; };
+		BB0FD5861DAE0D9E001AEC08 /* GKNewGankRealStuffCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0FD5851DAE0D9E001AEC08 /* GKNewGankRealStuffCell.m */; };
+		BB0FD58B1DAE0DEE001AEC08 /* GKSourceTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0FD5881DAE0DEE001AEC08 /* GKSourceTagView.m */; };
+		BB0FD58C1DAE0DEE001AEC08 /* GKGridImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0FD58A1DAE0DEE001AEC08 /* GKGridImageView.m */; };
 		BB2071221D9D5D5200C37E9B /* GKDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2071211D9D5D5200C37E9B /* GKDatePicker.m */; };
+		BB2568AF1DAF29FF00453103 /* GKImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2568AE1DAF29FF00453103 /* GKImageView.m */; };
 		BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290D9D1D7ABF3600B05777 /* GKDBManager.m */; };
 		BB290DA51D7D9F9600B05777 /* GKFeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA41D7D9F9600B05777 /* GKFeatureViewController.m */; };
 		BB290DA81D7DB0E400B05777 /* GKFeatureViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DA71D7DB0E400B05777 /* GKFeatureViewModel.m */; };
@@ -18,6 +22,7 @@
 		BB290DB71D8000C200B05777 /* GKSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB290DB61D8000C200B05777 /* GKSearchViewModel.m */; };
 		BB74BF191D96A862009650D7 /* GKRealStuffCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB74BF181D96A862009650D7 /* GKRealStuffCell.xib */; };
 		BB74BF1D1D98A132009650D7 /* GKPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB74BF1C1D98A132009650D7 /* GKPullHeaderView.m */; };
+		BB7615541DAFBB7700B91E53 /* GKProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7615531DAFBB7700B91E53 /* GKProgressView.m */; };
 		BB81F7A61D98F93300DFD9CA /* GKRealStuffsContainerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB81F7A51D98F93300DFD9CA /* GKRealStuffsContainerCell.m */; };
 		BB82E1311D85939700784FCB /* GKPullRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = BB82E1301D85939700784FCB /* GKPullRefresher.m */; };
 		BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E6B621D43997D0099979F /* GKRealStuffViewController.m */; };
@@ -40,8 +45,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB0FD5841DAE0D9E001AEC08 /* GKNewGankRealStuffCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKNewGankRealStuffCell.h; sourceTree = "<group>"; };
+		BB0FD5851DAE0D9E001AEC08 /* GKNewGankRealStuffCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKNewGankRealStuffCell.m; sourceTree = "<group>"; };
+		BB0FD5871DAE0DEE001AEC08 /* GKSourceTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSourceTagView.h; sourceTree = "<group>"; };
+		BB0FD5881DAE0DEE001AEC08 /* GKSourceTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSourceTagView.m; sourceTree = "<group>"; };
+		BB0FD5891DAE0DEE001AEC08 /* GKGridImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKGridImageView.h; sourceTree = "<group>"; };
+		BB0FD58A1DAE0DEE001AEC08 /* GKGridImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKGridImageView.m; sourceTree = "<group>"; };
 		BB2071201D9D5D5200C37E9B /* GKDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDatePicker.h; sourceTree = "<group>"; };
 		BB2071211D9D5D5200C37E9B /* GKDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDatePicker.m; sourceTree = "<group>"; };
+		BB2568AD1DAF29FF00453103 /* GKImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageView.h; sourceTree = "<group>"; };
+		BB2568AE1DAF29FF00453103 /* GKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageView.m; sourceTree = "<group>"; };
 		BB290D9C1D7ABF3600B05777 /* GKDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKDBManager.h; sourceTree = "<group>"; };
 		BB290D9D1D7ABF3600B05777 /* GKDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKDBManager.m; sourceTree = "<group>"; };
 		BB290DA21D7D445A00B05777 /* GKProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKProtocols.h; sourceTree = "<group>"; };
@@ -60,6 +73,8 @@
 		BB74BF181D96A862009650D7 /* GKRealStuffCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GKRealStuffCell.xib; sourceTree = "<group>"; };
 		BB74BF1B1D98A132009650D7 /* GKPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPullHeaderView.h; sourceTree = "<group>"; };
 		BB74BF1C1D98A132009650D7 /* GKPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPullHeaderView.m; sourceTree = "<group>"; };
+		BB7615521DAFBB7700B91E53 /* GKProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKProgressView.h; sourceTree = "<group>"; };
+		BB7615531DAFBB7700B91E53 /* GKProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKProgressView.m; sourceTree = "<group>"; };
 		BB81F7A41D98F93300DFD9CA /* GKRealStuffsContainerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRealStuffsContainerCell.h; sourceTree = "<group>"; };
 		BB81F7A51D98F93300DFD9CA /* GKRealStuffsContainerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRealStuffsContainerCell.m; sourceTree = "<group>"; };
 		BB82E12F1D85939700784FCB /* GKPullRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPullRefresher.h; sourceTree = "<group>"; };
@@ -130,6 +145,43 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BB0FD5821DAE0D58001AEC08 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				BB74BF1B1D98A132009650D7 /* GKPullHeaderView.h */,
+				BB74BF1C1D98A132009650D7 /* GKPullHeaderView.m */,
+				BB9E6B641D4399E90099979F /* GKRealStuffCell.h */,
+				BB9E6B651D4399E90099979F /* GKRealStuffCell.m */,
+				BB74BF181D96A862009650D7 /* GKRealStuffCell.xib */,
+				BB290DA91D7E660F00B05777 /* GKLoadingView.h */,
+				BB290DAA1D7E660F00B05777 /* GKLoadingView.m */,
+				BB82E12F1D85939700784FCB /* GKPullRefresher.h */,
+				BB82E1301D85939700784FCB /* GKPullRefresher.m */,
+				BB2071201D9D5D5200C37E9B /* GKDatePicker.h */,
+				BB2071211D9D5D5200C37E9B /* GKDatePicker.m */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		BB0FD5831DAE0D67001AEC08 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				BB81F7A41D98F93300DFD9CA /* GKRealStuffsContainerCell.h */,
+				BB81F7A51D98F93300DFD9CA /* GKRealStuffsContainerCell.m */,
+				BB0FD5871DAE0DEE001AEC08 /* GKSourceTagView.h */,
+				BB0FD5881DAE0DEE001AEC08 /* GKSourceTagView.m */,
+				BB0FD5891DAE0DEE001AEC08 /* GKGridImageView.h */,
+				BB0FD58A1DAE0DEE001AEC08 /* GKGridImageView.m */,
+				BB0FD5841DAE0D9E001AEC08 /* GKNewGankRealStuffCell.h */,
+				BB0FD5851DAE0D9E001AEC08 /* GKNewGankRealStuffCell.m */,
+				BB2568AD1DAF29FF00453103 /* GKImageView.h */,
+				BB2568AE1DAF29FF00453103 /* GKImageView.m */,
+				BB7615521DAFBB7700B91E53 /* GKProgressView.h */,
+				BB7615531DAFBB7700B91E53 /* GKProgressView.m */,
+			);
+			name = New;
+			sourceTree = "<group>";
+		};
 		BB290D9B1D7ABEF500B05777 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,19 +209,8 @@
 		BB9E6B601D4397140099979F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BB81F7A41D98F93300DFD9CA /* GKRealStuffsContainerCell.h */,
-				BB81F7A51D98F93300DFD9CA /* GKRealStuffsContainerCell.m */,
-				BB74BF1B1D98A132009650D7 /* GKPullHeaderView.h */,
-				BB74BF1C1D98A132009650D7 /* GKPullHeaderView.m */,
-				BB9E6B641D4399E90099979F /* GKRealStuffCell.h */,
-				BB9E6B651D4399E90099979F /* GKRealStuffCell.m */,
-				BB74BF181D96A862009650D7 /* GKRealStuffCell.xib */,
-				BB290DA91D7E660F00B05777 /* GKLoadingView.h */,
-				BB290DAA1D7E660F00B05777 /* GKLoadingView.m */,
-				BB82E12F1D85939700784FCB /* GKPullRefresher.h */,
-				BB82E1301D85939700784FCB /* GKPullRefresher.m */,
-				BB2071201D9D5D5200C37E9B /* GKDatePicker.h */,
-				BB2071211D9D5D5200C37E9B /* GKDatePicker.m */,
+				BB0FD5831DAE0D67001AEC08 /* New */,
+				BB0FD5821DAE0D58001AEC08 /* Old */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -303,7 +344,7 @@
 		BBFA9F5C1D3A9B49009440C6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Josscii;
 				TargetAttributes = {
 					BBFA9F631D3A9B49009440C6 = {
@@ -403,6 +444,7 @@
 				BB9E6B661D4399E90099979F /* GKRealStuffCell.m in Sources */,
 				BB290DAE1D7EEF4800B05777 /* GKSearchViewController.m in Sources */,
 				BB290DB41D7FB0EF00B05777 /* GKSearchResultViewController.m in Sources */,
+				BB0FD58C1DAE0DEE001AEC08 /* GKGridImageView.m in Sources */,
 				BB9E6B8C1D44FD910099979F /* RACSignal+MTL.m in Sources */,
 				BBFA9F8D1D3B146F009440C6 /* GKAppConstants.m in Sources */,
 				BBFA9F6C1D3A9B49009440C6 /* AppDelegate.m in Sources */,
@@ -413,10 +455,14 @@
 				BB9E6B8F1D4503EB0099979F /* MTLModel+JSON.m in Sources */,
 				BB290DAB1D7E660F00B05777 /* GKLoadingView.m in Sources */,
 				BB81F7A61D98F93300DFD9CA /* GKRealStuffsContainerCell.m in Sources */,
+				BB2568AF1DAF29FF00453103 /* GKImageView.m in Sources */,
+				BB0FD58B1DAE0DEE001AEC08 /* GKSourceTagView.m in Sources */,
+				BB7615541DAFBB7700B91E53 /* GKProgressView.m in Sources */,
 				BB74BF1D1D98A132009650D7 /* GKPullHeaderView.m in Sources */,
 				BBFA9F901D3B2238009440C6 /* GKNetworkConstants.m in Sources */,
 				BB9E6B791D44B6580099979F /* GKRealStuffViewModel.m in Sources */,
 				BB290D9E1D7ABF3600B05777 /* GKDBManager.m in Sources */,
+				BB0FD5861DAE0D9E001AEC08 /* GKNewGankRealStuffCell.m in Sources */,
 				BB82E1311D85939700784FCB /* GKPullRefresher.m in Sources */,
 				BB9E6B861D44F6380099979F /* AFHTTPSessionManager+RAC.m in Sources */,
 				BB9E6B631D43997D0099979F /* GKRealStuffViewController.m in Sources */,
@@ -461,8 +507,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -505,8 +553,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

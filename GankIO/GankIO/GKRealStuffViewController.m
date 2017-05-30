@@ -46,24 +46,20 @@ typedef void(^Block)(void);
     RAC(self, navigationItem.title) = RACObserve(self.viewModel, title);
     
     @weakify(self)
+    self.moveCellBlock = ^{
+        @strongify(self)
+        [self.tableView reloadData];
+    };
+    
     [[self.viewModel.requestRealStuffCommand.executionSignals switchToLatest] subscribeNext:^(NSArray *x) {
         @strongify(self)
         [self.loadingView stopLoading];
         self.moveCellBlock();
-        self.moveCellBlock = ^{
-            @strongify(self)
-            [self.tableView reloadData];
-        };;
     }];
     
     [self.viewModel.requestRealStuffCommand.executing subscribeNext:^(NSNumber *x) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = x.boolValue;
     }];
-    
-    self.moveCellBlock = ^{
-        @strongify(self)
-        [self.tableView reloadData];
-    };
     
     // notification
     [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:GKDidSelectRealStuffNotification object:nil]
@@ -138,12 +134,8 @@ typedef void(^Block)(void);
     @weakify(self)
     self.moveCellBlock = ^{
         @strongify(self)
-        if (self.currentIndex == 0) {
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
-        } else {
-            [self.tableView reloadData];
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:--self.currentIndex inSection:0]  atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        }
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:--self.currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     };
 }
 

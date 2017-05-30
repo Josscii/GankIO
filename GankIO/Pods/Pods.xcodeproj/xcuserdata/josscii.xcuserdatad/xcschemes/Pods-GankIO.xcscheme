@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5502F21B2EE259CBFB30374E959BFB8F"
+               BlueprintIdentifier = "A8F1CB60FD3BC9406EADB996771EB055"
                BuildableName = "Pods_GankIO.framework"
                BlueprintName = "Pods-GankIO"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5502F21B2EE259CBFB30374E959BFB8F"
+            BlueprintIdentifier = "A8F1CB60FD3BC9406EADB996771EB055"
             BuildableName = "Pods_GankIO.framework"
             BlueprintName = "Pods-GankIO"
             ReferencedContainer = "container:Pods.xcodeproj">

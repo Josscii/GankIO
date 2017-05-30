@@ -10,6 +10,7 @@
 #import "GKHttpClient.h"
 #import "RACSignal+MTL.h"
 #import "GKDBManager.h"
+#import "RealStuff.h"
 
 @interface GKRealStuffViewModel ()
 
@@ -119,7 +120,7 @@
         self.loadState = GKLoadStateNext;
         [self loadRealStuffAtOneDay:index];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GKHasReachedTheBottom" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GKHasReachedTheBottomNotification object:nil];
     }
 }
 
@@ -129,7 +130,7 @@
         self.loadState = GKLoadStatePre;
         [self loadRealStuffAtOneDay:index];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GKHasReachedTheTop" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GKHasReachedTheTopNotification object:nil];
     }
 }
 
@@ -155,9 +156,14 @@
         }] foldLeftWithStart:@[] reduce:^id(NSArray *accumulator, id value) {
             return [accumulator arrayByAddingObjectsFromArray:value];
         }];
-    }] retry:3] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] doNext:^(id x) {
-        [[[GKDBManager defaultManager] saveRealStuffs:x ofDay:self.history[self.currentIndex]] subscribeNext:^(id x) {
-            NSLog(@"saved realstuffs successfully of %@", self.history[self.currentIndex]);
+    }] retry:3] mtl_mapToArrayOfModelsWithClass:[RealStuff class]] doNext:^(NSArray<RealStuff *> *realStuffs) {
+        for (RealStuff *rs in realStuffs) {
+            if (rs.images == nil) {
+                rs.images = @[];
+            }
+        }
+        [[[GKDBManager defaultManager] saveRealStuffs:realStuffs ofDay:self.history[self.currentIndex]] subscribeNext:^(id x) {
+            // NSLog(@"saved realstuffs successfully of %@", self.history[self.currentIndex]);
         }];
     }];
 }
@@ -171,7 +177,7 @@
     }] retry:3] doNext:^(NSArray *history) {
         [history enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [[[GKDBManager defaultManager] saveHistory:obj] subscribeNext:^(id x) {
-                NSLog(@"saved history successfully of %@", x);
+                // NSLog(@"saved history successfully of %@", x);
             }];
         }];
     }];

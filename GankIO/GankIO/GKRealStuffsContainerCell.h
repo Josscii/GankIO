@@ -10,6 +10,7 @@
 #import "RealStuff.h"
 #import "GKPullRefresher.h"
 #import "GKLoadingView.h"
+#import "GKNewGankRealStuffCell.h"
 
 @protocol GKRealStuffProtocol <NSObject>
 
@@ -18,7 +19,7 @@
 
 @end
 
-@interface GKRealStuffsContainerCell : UITableViewCell
+@interface GKRealStuffsContainerCell : UITableViewCell <GKNewGankRealStuffCellDelegate>
 
 @property (nonatomic, copy) NSArray *realStuffs;
 @property (nonatomic, weak) id<GKRealStuffProtocol> delegate;

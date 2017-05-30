@@ -40,6 +40,8 @@
     self.realStuffTitleLabel.text = rs.desc;
     self.kindIndicatorView.backgroundColor = color;
     self.markView.hidden = !rs.isFavorite;
+    
+    NSLog(@"%@", rs.images);
 }
 
 - (UIView *)markView {

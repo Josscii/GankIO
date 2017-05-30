@@ -19,3 +19,6 @@ NSString *const GKDidUnMarkRealStuffNotification = @"GKDidUnMarkRealStuffNotific
 NSString *const GKDidSelectRealStuffNotification = @"GKDidSelectRealStuffNotification";
 
 NSString *const GKShouldReloadTableNotification = @"GKShouldReloadTableNotification";
+
+NSString *const GKHasReachedTheBottomNotification = @"GKHasReachedTheBottomNotification";
+NSString *const GKHasReachedTheTopNotification = @"GKHasReachedTheTopNotification";
